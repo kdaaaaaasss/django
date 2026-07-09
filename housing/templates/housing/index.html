@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Рязань.Аренда — аренда жилья в Рязани</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="header__inner container">
+            <div class="header__left">
+                <a href="#" class="logo">
+                    <img src="../../static/img/logo.svg" alt="Рязань.Аренда" class="logo__img" />
+                    <span class="logo__text">Рязань.Аренда</span>
+                </a>
+            </div>
+
+            <nav class="header__nav">
+                <a href="#" class="header__nav-link">Жильё</a>
+                <a href="#" class="header__nav-link">О сервисе</a>
+                <a href="#" class="header__nav-link">Как это работает</a>
+                <a href="#" class="header__nav-link">Стать хозяином</a>
+            </nav>
+
+            <div class="header__right">
+                <a href="#" class="header__action header__action--favorite">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <span>Избранное</span>
+                </a>
+                <a href="#" class="header__action header__action--login">Войти</a>
+                <a href="#" class="btn btn--primary btn--small">Разместить жильё</a>
+            </div>
+
+            <button class="header__burger" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero__bg">
+            <img src="../../static/img/hero.jpg" alt="Рязань" class="hero__image" />
+            <div class="hero__overlay"></div>
+        </div>
+
+        <div class="hero__content container">
+            <h1 class="hero__title">Аренда жилья в Рязани</h1>
+            <p class="hero__subtitle">Найдите идеальное жильё для поездки, командировки или отдыха.</p>
+
+            <!-- Search Form -->
+            <form class="search-form" action="#" method="get">
+                <div class="search-form__fields">
+                    <div class="search-form__group search-form__group--city">
+                        <label class="search-form__label">Город</label>
+                        <div class="search-form__input-wrapper">
+                            <svg class="search-form__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <input type="text" class="search-form__input" value="Рязань" placeholder="Город" />
+                        </div>
+                    </div>
+
+                    <div class="search-form__group search-form__group--date">
+                        <label class="search-form__label">Заезд</label>
+                        <div class="search-form__input-wrapper">
+                            <svg class="search-form__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            <input type="date" class="search-form__input" value="2026-07-15" />
+                        </div>
+                    </div>
+
+                    <div class="search-form__group search-form__group--date">
+                        <label class="search-form__label">Выезд</label>
+                        <div class="search-form__input-wrapper">
+                            <svg class="search-form__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            <input type="date" class="search-form__input" value="2026-07-18" />
+                        </div>
+                    </div>
+
+                    <div class="search-form__group search-form__group--guests">
+                        <label class="search-form__label">Гости</label>
+                        <div class="search-form__input-wrapper">
+                            <svg class="search-form__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <input type="number" class="search-form__input search-form__input--guests" value="2" min="1" max="10" />
+                            <span class="search-form__guest-label">гостя</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--large search-form__btn">
+                        Найти жильё
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ========== POPULAR ========== -->
+    <section class="popular section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Популярное в Рязани</h2>
+            </div>
+
+            <div class="popular__grid">
+                <!-- Карточка 1 -->
+                <article class="card">
+                    <div class="card__image-wrapper">
+                        <img src="../../static/img/apartment-1.jpg" alt="Квартира в центре" class="card__image" />
+                        <button class="card__favorite" aria-label="В избранное">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                        <span class="card__price">2 800 ₽ <span class="card__price-period">/ ночь</span></span>
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">Квартира в центре</h3>
+                        <p class="card__address">ул. Почтовая, 55</p>
+                        <div class="card__meta">
+                            <span class="card__rating">★ 4.9 <span class="card__reviews">(128)</span></span>
+                            <span class="card__guests">До 4 гостей</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Карточка 2 -->
+                <article class="card">
+                    <div class="card__image-wrapper">
+                        <img src="../../static/img/apartment-2.jpg" alt="Уютная студия" class="card__image" />
+                        <button class="card__favorite" aria-label="В избранное">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                        <span class="card__price">2 500 ₽ <span class="card__price-period">/ ночь</span></span>
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">Уютная студия</h3>
+                        <p class="card__address">ул. Радищева, 22</p>
+                        <div class="card__meta">
+                            <span class="card__rating">★ 4.8 <span class="card__reviews">(96)</span></span>
+                            <span class="card__guests">До 2 гостей</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Карточка 3 -->
+                <article class="card">
+                    <div class="card__image-wrapper">
+                        <img src="../../static/img/apartment-3.jpg" alt="Апартаменты у Кремля" class="card__image" />
+                        <button class="card__favorite" aria-label="В избранное">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                        <span class="card__price">3 200 ₽ <span class="card__price-period">/ ночь</span></span>
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">Апартаменты у Кремля</h3>
+                        <p class="card__address">ул. Ленина, 10</p>
+                        <div class="card__meta">
+                            <span class="card__rating">★ 4.9 <span class="card__reviews">(75)</span></span>
+                            <span class="card__guests">До 4 гостей</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Карточка 4 -->
+                <article class="card">
+                    <div class="card__image-wrapper">
+                        <img src="../../static/img/apartment-4.jpg" alt="Современная квартира" class="card__image" />
+                        <button class="card__favorite" aria-label="В избранное">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                        <span class="card__price">2 900 ₽ <span class="card__price-period">/ ночь</span></span>
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">Современная квартира</h3>
+                        <p class="card__address">ул. Татарская, 21</p>
+                        <div class="card__meta">
+                            <span class="card__rating">★ 4.7 <span class="card__reviews">(63)</span></span>
+                            <span class="card__guests">До 3 гостей</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Карточка 5 -->
+                <article class="card">
+                    <div class="card__image-wrapper">
+                        <img src="../../static/img/apartment-5.jpg" alt="Квартира рядом с вокзалом" class="card__image" />
+                        <button class="card__favorite" aria-label="В избранное">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
+                        <span class="card__price">2 400 ₽ <span class="card__price-period">/ ночь</span></span>
+                    </div>
+                    <div class="card__body">
+                        <h3 class="card__title">Квартира рядом с вокзалом</h3>
+                        <p class="card__address">пл. Димитрова, 1</p>
+                        <div class="card__meta">
+                            <span class="card__rating">★ 4.6 <span class="card__reviews">(54)</span></span>
+                            <span class="card__guests">До 2 гостей</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== BENEFITS ========== -->
+    <section class="benefits section">
+        <div class="container">
+            <div class="benefits__grid">
+                <div class="benefit">
+                    <div class="benefit__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <polyline points="9 12 11 14 15 10" />
+                        </svg>
+                    </div>
+                    <h3 class="benefit__title">Проверенные жильё</h3>
+                    <p class="benefit__text">Мы проверяем всех хозяев и их жильё</p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <h3 class="benefit__title">Честные цены</h3>
+                    <p class="benefit__text">Без скрытых комиссий и переплат</p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <path d="M8 11l2 2 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="benefit__title">Поддержка 24/7</h3>
+                    <p class="benefit__text">Мы всегда на связи и готовы помочь</p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg>
+                    </div>
+                    <h3 class="benefit__title">Безопасные платежи</h3>
+                    <p class="benefit__text">Ваши данные и платежи под защитой</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHY CHOOSE US ========== -->
+    <section class="why section">
+        <div class="container">
+            <div class="why__inner">
+                <div class="why__image">
+                    <img src="../../static/img/hero.jpg" alt="Почему выбирают нас" />
+                </div>
+                <div class="why__content">
+                    <h2 class="why__title">Почему выбирают нас</h2>
+                    <p class="why__subtitle">
+                        Мы делаем аренду жилья в Рязани простой, безопасной и комфортной.
+                        Наша платформа объединяет проверенных хозяев и гостей, ценящих качество.
+                    </p>
+                    <ul class="why__list">
+                        <li class="why__item">
+                            <span class="why__check">✓</span>
+                            <span>Более 500 квартир в Рязани и области</span>
+                        </li>
+                        <li class="why__item">
+                            <span class="why__check">✓</span>
+                            <span>Мгновенное бронирование без звонков</span>
+                        </li>
+                        <li class="why__item">
+                            <span class="why__check">✓</span>
+                            <span>Реальные отзывы от реальных гостей</span>
+                        </li>
+                        <li class="why__item">
+                            <span class="why__check">✓</span>
+                            <span>Бесплатная отмена за 24 часа</span>
+                        </li>
+                        <li class="why__item">
+                            <span class="why__check">✓</span>
+                            <span>Поддержка на русском языке 24/7</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn btn--primary">Начать поиск</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__col footer__col--brand">
+                    <a href="#" class="footer__logo">
+                        <img src="../../static/img/logo.svg" alt="Рязань.Аренда" class="footer__logo-img" />
+                        <span class="footer__logo-text">Рязань.Аренда</span>
+                    </a>
+                    <p class="footer__description">
+                        Сервис аренды жилья в Рязани. Уютные квартиры, апартаменты и студии для ваших поездок.
+                    </p>
+                    <div class="footer__socials">
+                        <a href="#" class="footer__social" aria-label="Telegram">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 4.56L20.18 20.16C19.96 21.04 19.32 21.31 18.59 20.92L13.29 17.17L10.68 19.68C10.44 19.92 10.24 20.12 9.78 20.12L10.12 14.74L18.46 7.15C18.82 6.83 18.39 6.65 17.92 6.96L7.79 13.3L2.53 11.65C1.67 11.39 1.65 10.77 2.71 10.37L22.2 3.31C22.94 3.01 23.6 3.46 24 4.56Z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="VK">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.58 6.44C21.76 5.96 21.58 5.58 20.96 5.58H18.33C17.79 5.58 17.53 5.88 17.37 6.22C17.37 6.22 16.07 9.08 14.27 10.99C13.78 11.48 13.56 11.65 13.29 11.65C13.11 11.65 12.83 11.48 12.83 11V6.44C12.83 5.88 12.65 5.58 12.2 5.58H8.83C8.5 5.58 8.3 5.86 8.3 6.12C8.3 6.66 9.1 6.8 9.2 8.7V11.79C9.2 12.51 9.06 12.65 8.79 12.65C8.06 12.65 6.47 9.78 5.17 6.55C4.92 5.91 4.66 5.58 4.1 5.58H1.45C0.85 5.58 0.74 5.88 0.74 6.22C0.74 6.83 1.48 9.92 3.91 13.93C5.64 16.82 8.14 18.42 10.38 18.42C11.8 18.42 11.96 18.1 11.96 17.55V15.14C11.96 14.55 12.12 14.39 12.52 14.39C12.82 14.39 13.35 14.56 14.71 15.87C16.22 17.34 16.45 18.42 17.28 18.42H19.91C20.47 18.42 20.75 18.1 20.61 17.56C20.45 17 19.68 16.15 18.65 15.16C18.16 14.62 17.45 14.04 17.22 13.75C16.91 13.37 17 13.19 17.22 12.85C17.22 12.85 19.9 9.08 20.38 8.02C21.2 6.44 21.58 6.44 21.58 6.44Z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="YouTube">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.5 6.2C23.4 5.7 23.1 5.2 22.6 4.9C22.1 4.6 21.4 4.4 20.4 4.3C19.4 4.1 18.2 4 16.8 3.9C15.4 3.8 14 3.8 12.6 3.8C11.2 3.8 9.8 3.8 8.4 3.9C7 4 5.8 4.1 4.8 4.3C3.8 4.4 3.1 4.6 2.6 4.9C2.1 5.2 1.8 5.7 1.7 6.2C1.5 7.2 1.4 8.3 1.3 9.5C1.2 10.7 1.2 11.9 1.2 13C1.2 14.1 1.2 15.3 1.3 16.5C1.4 17.7 1.5 18.8 1.7 19.8C1.8 20.3 2.1 20.8 2.6 21.1C3.1 21.4 3.8 21.6 4.8 21.7C5.8 21.9 7 22 8.4 22.1C9.8 22.2 11.2 22.2 12.6 22.2C14 22.2 15.4 22.2 16.8 22.1C18.2 22 19.4 21.9 20.4 21.7C21.4 21.6 22.1 21.4 22.6 21.1C23.1 20.8 23.4 20.3 23.5 19.8C23.7 18.8 23.8 17.7 23.9 16.5C24 15.3 24 14.1 24 13C24 11.9 24 10.7 23.9 9.5C23.8 8.3 23.7 7.2 23.5 6.2ZM9.5 16.9V9.1L16.5 13L9.5 16.9Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Жильё</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Квартиры</a></li>
+                        <li><a href="#">Студии</a></li>
+                        <li><a href="#">Апартаменты</a></li>
+                        <li><a href="#">Дома</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">О сервисе</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Как это работает</a></li>
+                        <li><a href="#">Правила</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Помощь</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Поддержка 24/7</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Стать хозяином</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Контакты</h4>
+                    <ul class="footer__list">
+                        <li><a href="mailto:hello@ryazan-arenda.ru">hello@ryazan-arenda.ru</a></li>
+                        <li><a href="tel:+74951234567">+7 (495) 123-45-67</a></li>
+                        <li><span>Рязань, ул. Горького, 15</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copy">&copy; 2026 Рязань.Аренда. Все права защищены.</p>
+                <div class="footer__legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
