@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path
 
 from housing.views import index
+from housing.views import catalog
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="index"),
+    path('catalog/', catalog, name="catalog"),
 ]

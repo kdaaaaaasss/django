@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,24 +8,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../static/css/style.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
     <!-- ========== HEADER ========== -->
     <header class="header">
         <div class="header__inner container">
             <div class="header__left">
-                <a href="#" class="logo">
-                    <img src="../../static/img/logo.svg" alt="Рязань.Аренда" class="logo__img" />
-                    <span class="logo__text">Рязань.Аренда</span>
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'img/logo.png' %}" alt="Рязань.Аренда" class="logo__img" />
                 </a>
             </div>
 
             <nav class="header__nav">
-                <a href="#" class="header__nav-link">Жильё</a>
+                <a href="{% url 'catalog' %}" class="header__nav-link">Каталог жилья</a>
+                <a href="#" class="header__nav-link">Карта жилья</a>
                 <a href="#" class="header__nav-link">О сервисе</a>
-                <a href="#" class="header__nav-link">Как это работает</a>
-                <a href="#" class="header__nav-link">Стать хозяином</a>
+                <a href="#" class="header__nav-link">Контакты</a>
+                <a href="#" class="header__nav-link header__nav-link--highlight">Стать хозяином</a>
             </nav>
 
             <div class="header__right">
@@ -49,7 +50,7 @@
     <!-- ========== HERO ========== -->
     <section class="hero">
         <div class="hero__bg">
-            <img src="../../static/img/hero.jpg" alt="Рязань" class="hero__image" />
+            <img src="{% static 'img/hero.jpg' %}" alt="Рязань" class="hero__image" />
             <div class="hero__overlay"></div>
         </div>
 
@@ -122,113 +123,124 @@
         <div class="container">
             <div class="section__header">
                 <h2 class="section__title">Популярное в Рязани</h2>
+                <a href="{% url 'catalog' %}" class="section__link">Смотреть все →</a>
             </div>
 
             <div class="popular__grid">
                 <!-- Карточка 1 -->
-                <article class="card">
-                    <div class="card__image-wrapper">
-                        <img src="../../static/img/apartment-1.jpg" alt="Квартира в центре" class="card__image" />
-                        <button class="card__favorite" aria-label="В избранное">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
-                        <span class="card__price">2 800 ₽ <span class="card__price-period">/ ночь</span></span>
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">Квартира в центре</h3>
-                        <p class="card__address">ул. Почтовая, 55</p>
-                        <div class="card__meta">
-                            <span class="card__rating">★ 4.9 <span class="card__reviews">(128)</span></span>
-                            <span class="card__guests">До 4 гостей</span>
+                <a href="#" class="card-link">
+                    <article class="card">
+                        <div class="card__image-wrapper">
+                            <img src="{% static 'img/apartment-1.jpg' %}" alt="Квартира в центре" class="card__image" />
+                            <button class="card__favorite" onclick="event.stopPropagation();" aria-label="В избранное">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </button>
+                            <span class="card__price">2 800 ₽ <span class="card__price-period">/ ночь</span></span>
                         </div>
-                    </div>
-                </article>
+                        <div class="card__body">
+                            <h3 class="card__title">Квартира в центре</h3>
+                            <p class="card__address">ул. Почтовая, 55</p>
+                            <div class="card__meta">
+                                <span class="card__rating">★ 4.9 <span class="card__reviews">(128)</span></span>
+                                <span class="card__guests">До 4 гостей</span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
 
                 <!-- Карточка 2 -->
-                <article class="card">
-                    <div class="card__image-wrapper">
-                        <img src="../../static/img/apartment-2.jpg" alt="Уютная студия" class="card__image" />
-                        <button class="card__favorite" aria-label="В избранное">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
-                        <span class="card__price">2 500 ₽ <span class="card__price-period">/ ночь</span></span>
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">Уютная студия</h3>
-                        <p class="card__address">ул. Радищева, 22</p>
-                        <div class="card__meta">
-                            <span class="card__rating">★ 4.8 <span class="card__reviews">(96)</span></span>
-                            <span class="card__guests">До 2 гостей</span>
+                <a href="#" class="card-link">
+                    <article class="card">
+                        <div class="card__image-wrapper">
+                            <img src="{% static 'img/apartment-2.jpg' %}" alt="Уютная студия" class="card__image" />
+                            <button class="card__favorite" onclick="event.stopPropagation();" aria-label="В избранное">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </button>
+                            <span class="card__price">2 500 ₽ <span class="card__price-period">/ ночь</span></span>
                         </div>
-                    </div>
-                </article>
+                        <div class="card__body">
+                            <h3 class="card__title">Уютная студия</h3>
+                            <p class="card__address">ул. Радищева, 22</p>
+                            <div class="card__meta">
+                                <span class="card__rating">★ 4.8 <span class="card__reviews">(96)</span></span>
+                                <span class="card__guests">До 2 гостей</span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
 
                 <!-- Карточка 3 -->
-                <article class="card">
-                    <div class="card__image-wrapper">
-                        <img src="../../static/img/apartment-3.jpg" alt="Апартаменты у Кремля" class="card__image" />
-                        <button class="card__favorite" aria-label="В избранное">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
-                        <span class="card__price">3 200 ₽ <span class="card__price-period">/ ночь</span></span>
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">Апартаменты у Кремля</h3>
-                        <p class="card__address">ул. Ленина, 10</p>
-                        <div class="card__meta">
-                            <span class="card__rating">★ 4.9 <span class="card__reviews">(75)</span></span>
-                            <span class="card__guests">До 4 гостей</span>
+                <a href="#" class="card-link">
+                    <article class="card">
+                        <div class="card__image-wrapper">
+                            <img src="{% static 'img/apartment-3.jpg' %}" alt="Апартаменты у Кремля" class="card__image" />
+                            <button class="card__favorite" onclick="event.stopPropagation();" aria-label="В избранное">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </button>
+                            <span class="card__price">3 200 ₽ <span class="card__price-period">/ ночь</span></span>
                         </div>
-                    </div>
-                </article>
+                        <div class="card__body">
+                            <h3 class="card__title">Апартаменты у Кремля</h3>
+                            <p class="card__address">ул. Ленина, 10</p>
+                            <div class="card__meta">
+                                <span class="card__rating">★ 4.9 <span class="card__reviews">(75)</span></span>
+                                <span class="card__guests">До 4 гостей</span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
 
                 <!-- Карточка 4 -->
-                <article class="card">
-                    <div class="card__image-wrapper">
-                        <img src="../../static/img/apartment-4.jpg" alt="Современная квартира" class="card__image" />
-                        <button class="card__favorite" aria-label="В избранное">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
-                        <span class="card__price">2 900 ₽ <span class="card__price-period">/ ночь</span></span>
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">Современная квартира</h3>
-                        <p class="card__address">ул. Татарская, 21</p>
-                        <div class="card__meta">
-                            <span class="card__rating">★ 4.7 <span class="card__reviews">(63)</span></span>
-                            <span class="card__guests">До 3 гостей</span>
+                <a href="#" class="card-link">
+                    <article class="card">
+                        <div class="card__image-wrapper">
+                            <img src="{% static 'img/apartment-4.jpg' %}" alt="Современная квартира" class="card__image" />
+                            <button class="card__favorite" onclick="event.stopPropagation();" aria-label="В избранное">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </button>
+                            <span class="card__price">2 900 ₽ <span class="card__price-period">/ ночь</span></span>
                         </div>
-                    </div>
-                </article>
+                        <div class="card__body">
+                            <h3 class="card__title">Современная квартира</h3>
+                            <p class="card__address">ул. Татарская, 21</p>
+                            <div class="card__meta">
+                                <span class="card__rating">★ 4.7 <span class="card__reviews">(63)</span></span>
+                                <span class="card__guests">До 3 гостей</span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
 
                 <!-- Карточка 5 -->
-                <article class="card">
-                    <div class="card__image-wrapper">
-                        <img src="../../static/img/apartment-5.jpg" alt="Квартира рядом с вокзалом" class="card__image" />
-                        <button class="card__favorite" aria-label="В избранное">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
-                        <span class="card__price">2 400 ₽ <span class="card__price-period">/ ночь</span></span>
-                    </div>
-                    <div class="card__body">
-                        <h3 class="card__title">Квартира рядом с вокзалом</h3>
-                        <p class="card__address">пл. Димитрова, 1</p>
-                        <div class="card__meta">
-                            <span class="card__rating">★ 4.6 <span class="card__reviews">(54)</span></span>
-                            <span class="card__guests">До 2 гостей</span>
+                <a href="#" class="card-link">
+                    <article class="card">
+                        <div class="card__image-wrapper">
+                            <img src="{% static 'img/apartment-5.jpg' %}" alt="Квартира рядом с вокзалом" class="card__image" />
+                            <button class="card__favorite" onclick="event.stopPropagation();" aria-label="В избранное">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
+                            </button>
+                            <span class="card__price">2 400 ₽ <span class="card__price-period">/ ночь</span></span>
                         </div>
-                    </div>
-                </article>
+                        <div class="card__body">
+                            <h3 class="card__title">Квартира рядом с вокзалом</h3>
+                            <p class="card__address">пл. Димитрова, 1</p>
+                            <div class="card__meta">
+                                <span class="card__rating">★ 4.6 <span class="card__reviews">(54)</span></span>
+                                <span class="card__guests">До 2 гостей</span>
+                            </div>
+                        </div>
+                    </article>
+                </a>
             </div>
         </div>
     </section>
@@ -289,7 +301,7 @@
         <div class="container">
             <div class="why__inner">
                 <div class="why__image">
-                    <img src="../../static/img/hero.jpg" alt="Почему выбирают нас" />
+                    <img src="{% static 'img/hero.jpg' %}" alt="Почему выбирают нас" />
                 </div>
                 <div class="why__content">
                     <h2 class="why__title">Почему выбирают нас</h2>
@@ -330,8 +342,8 @@
         <div class="container">
             <div class="footer__inner">
                 <div class="footer__col footer__col--brand">
-                    <a href="#" class="footer__logo">
-                        <img src="../../static/img/logo.svg" alt="Рязань.Аренда" class="footer__logo-img" />
+                    <a href="{% url 'index' %}" class="footer__logo">
+                        <img src="{% static 'img/logo.png' %}" alt="Рязань.Аренда" class="footer__logo-img" />
                         <span class="footer__logo-text">Рязань.Аренда</span>
                     </a>
                     <p class="footer__description">
@@ -357,7 +369,7 @@
                 </div>
 
                 <div class="footer__col">
-                    <h4 class="footer__col-title">Жильё</h4>
+                    <h4 class="footer__col-title">Каталог</h4>
                     <ul class="footer__list">
                         <li><a href="#">Квартиры</a></li>
                         <li><a href="#">Студии</a></li>
@@ -382,16 +394,15 @@
                         <li><a href="#">Поддержка 24/7</a></li>
                         <li><a href="#">Частые вопросы</a></li>
                         <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Стать хозяином</a></li>
                     </ul>
                 </div>
 
                 <div class="footer__col">
-                    <h4 class="footer__col-title">Контакты</h4>
+                    <h4 class="footer__col-title">Хозяевам</h4>
                     <ul class="footer__list">
-                        <li><a href="mailto:hello@ryazan-arenda.ru">hello@ryazan-arenda.ru</a></li>
-                        <li><a href="tel:+74951234567">+7 (495) 123-45-67</a></li>
-                        <li><span>Рязань, ул. Горького, 15</span></li>
+                        <li><a href="#">Стать хозяином</a></li>
+                        <li><a href="#">Добавить квартиру</a></li>
+                        <li><a href="#">Управление объявлениями</a></li>
                     </ul>
                 </div>
             </div>
