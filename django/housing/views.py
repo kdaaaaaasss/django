@@ -5,4 +5,7 @@ def index(request):
 
 def catalog(request):
     return render(request, "housing/catalog.html")
+
+def service(request):
+    return render(request, "housing/service.html"),
 # Create your views here.

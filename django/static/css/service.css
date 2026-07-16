@@ -1,0 +1,277 @@
+/* ==========================================
+   static/css/service.css
+   Страница "О сервисе"
+   ========================================== */
+
+/* ---------- HERO ---------- */
+.service-hero {
+    padding: 120px 0 60px;
+    background: #222222;
+    color: #fff;
+    text-align: center;
+}
+
+.service-hero__title {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.service-hero__subtitle {
+    font-size: 20px;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+/* ---------- ОБЩИЕ СЕКЦИИ ---------- */
+.section {
+    padding: 72px 0;
+}
+
+.section:nth-child(even) {
+    background: #ffffff;
+}
+
+.section:nth-child(odd) {
+    background: #f7f7f7;
+}
+
+/* ---------- МИССИЯ ---------- */
+.mission__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.mission__title {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.mission__text {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.mission__image {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+}
+
+.mission__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 300px;
+}
+
+/* ---------- ПРЕИМУЩЕСТВА ---------- */
+.advantages__title,
+.how__title,
+.contacts__title {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 40px;
+}
+
+.advantages__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.advantage {
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.advantage:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.advantage__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(230, 57, 99, 0.08);
+    margin-bottom: 16px;
+}
+
+.advantage__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.advantage__text {
+    font-size: 15px;
+    color: #777;
+    line-height: 1.5;
+}
+
+/* ---------- КАК МЫ РАБОТАЕМ ---------- */
+.how__steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.step {
+    text-align: center;
+    padding: 24px 16px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.step__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #E63963;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.step__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.step__text {
+    font-size: 15px;
+    color: #777;
+    line-height: 1.5;
+}
+
+/* ---------- СТАТИСТИКА ---------- */
+.stats {
+    background: #E63963;
+    color: #fff;
+}
+
+.stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+}
+
+.stat__number {
+    display: block;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+}
+
+.stat__label {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ---------- КОНТАКТЫ ---------- */
+.contacts__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.contact {
+    text-align: center;
+    padding: 24px 16px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.contact__title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.contact__link,
+.contact__text {
+    font-size: 17px;
+    font-weight: 500;
+    color: #222;
+}
+
+.contact__link:hover {
+    color: #E63963;
+}
+
+/* ---------- АДАПТИВ ---------- */
+@media (max-width: 1200px) {
+    .advantages__grid,
+    .how__steps,
+    .stats__grid,
+    .contacts__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 992px) {
+    .mission__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .mission__image img {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero {
+        padding: 100px 0 40px;
+    }
+    .service-hero__title {
+        font-size: 32px;
+    }
+    .service-hero__subtitle {
+        font-size: 17px;
+    }
+    .section {
+        padding: 48px 0;
+    }
+    .advantages__grid,
+    .how__steps,
+    .stats__grid,
+    .contacts__grid {
+        grid-template-columns: 1fr;
+    }
+    .advantage,
+    .step,
+    .contact {
+        max-width: 360px;
+        margin: 0 auto;
+    }
+}

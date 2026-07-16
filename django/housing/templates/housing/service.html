@@ -1,0 +1,165 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/service.css' %}" />
+{% endblock %}
+
+{% block content %}
+    <!-- ========== HERO (мини) ========== -->
+    <section class="service-hero">
+        <div class="container">
+            <h1 class="service-hero__title">О сервисе</h1>
+            <p class="service-hero__subtitle">Рязань.Аренда — это надёжный и удобный способ арендовать жильё в Рязани</p>
+        </div>
+    </section>
+
+    <!-- ========== МИССИЯ ========== -->
+    <section class="mission section">
+        <div class="container">
+            <div class="mission__inner">
+                <div class="mission__content">
+                    <h2 class="mission__title">Наша миссия</h2>
+                    <p class="mission__text">
+                        Сделать аренду жилья в Рязани простой, прозрачной и комфортной для каждого.
+                        Мы соединяем проверенных хозяев и гостей, которые ценят качество, честность и уют.
+                    </p>
+                    <p class="mission__text">
+                        Мы убираем лишние звонки, скрытые комиссии и неопределённость.
+                        Всё, что вам нужно, — выбрать квартиру и забронировать её в пару кликов.
+                    </p>
+                </div>
+                <div class="mission__image">
+                    <img src="{% static 'img/hero.jpg' %}" alt="О нас" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ПРЕИМУЩЕСТВА ========== -->
+    <section class="advantages section">
+        <div class="container">
+            <h2 class="advantages__title">Почему выбирают нас</h2>
+            <div class="advantages__grid">
+                <div class="advantage">
+                    <div class="advantage__icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <polyline points="9 12 11 14 15 10" />
+                        </svg>
+                    </div>
+                    <h3 class="advantage__title">Проверенные объекты</h3>
+                    <p class="advantage__text">Каждое жильё проходит модерацию, чтобы вы получали только качественные варианты.</p>
+                </div>
+                <div class="advantage">
+                    <div class="advantage__icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <h3 class="advantage__title">Честные цены</h3>
+                    <p class="advantage__text">Никаких скрытых комиссий — вы платите ровно ту сумму, которую видите на сайте.</p>
+                </div>
+                <div class="advantage">
+                    <div class="advantage__icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <path d="M8 11l2 2 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="advantage__title">Поддержка 24/7</h3>
+                    <p class="advantage__text">Наша команда всегда на связи, чтобы помочь вам с любым вопросом.</p>
+                </div>
+                <div class="advantage">
+                    <div class="advantage__icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg>
+                    </div>
+                    <h3 class="advantage__title">Безопасные платежи</h3>
+                    <p class="advantage__text">Ваши данные и деньги защищены современными технологиями безопасности.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== КАК МЫ РАБОТАЕМ ========== -->
+    <section class="how section">
+        <div class="container">
+            <h2 class="how__title">Как мы работаем</h2>
+            <div class="how__steps">
+                <div class="step">
+                    <span class="step__number">1</span>
+                    <h3 class="step__title">Выбор жилья</h3>
+                    <p class="step__text">Отфильтруйте квартиры по цене, датам, количеству гостей и другим параметрам.</p>
+                </div>
+                <div class="step">
+                    <span class="step__number">2</span>
+                    <h3 class="step__title">Бронирование</h3>
+                    <p class="step__text">Забронируйте понравившийся вариант в несколько кликов без лишних звонков.</p>
+                </div>
+                <div class="step">
+                    <span class="step__number">3</span>
+                    <h3 class="step__title">Подтверждение</h3>
+                    <p class="step__text">Хозяин подтвердит бронь, и вы получите все контактные данные для заезда.</p>
+                </div>
+                <div class="step">
+                    <span class="step__number">4</span>
+                    <h3 class="step__title">Отдых</h3>
+                    <p class="step__text">Наслаждайтесь поездкой, а мы будем на связи 24/7 на случай любых вопросов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ЦИФРЫ / СТАТИСТИКА ========== -->
+    <section class="stats section">
+        <div class="container">
+            <div class="stats__grid">
+                <div class="stat">
+                    <span class="stat__number">500+</span>
+                    <span class="stat__label">квартир в каталоге</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number">98%</span>
+                    <span class="stat__label">довольных гостей</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number">24/7</span>
+                    <span class="stat__label">поддержка</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number">15 мин</span>
+                    <span class="stat__label">среднее время бронирования</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== КОНТАКТЫ ========== -->
+    <section class="contacts section">
+        <div class="container">
+            <h2 class="contacts__title">Свяжитесь с нами</h2>
+            <div class="contacts__grid">
+                <div class="contact">
+                    <h3 class="contact__title">Email</h3>
+                    <a href="mailto:hello@ryazan-arenda.ru" class="contact__link">hello@ryazan-arenda.ru</a>
+                </div>
+                <div class="contact">
+                    <h3 class="contact__title">Телефон</h3>
+                    <a href="tel:+74951234567" class="contact__link">+7 (495) 123-45-67</a>
+                </div>
+                <div class="contact">
+                    <h3 class="contact__title">Адрес</h3>
+                    <span class="contact__text">Рязань, ул. Горького, 15</span>
+                </div>
+                <div class="contact">
+                    <h3 class="contact__title">Часы работы</h3>
+                    <span class="contact__text">Ежедневно с 9:00 до 21:00</span>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

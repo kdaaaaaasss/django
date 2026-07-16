@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Рязань.Аренда — аренда жилья в Рязани</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+        <div class="header__inner container">
+            <div class="header__left">
+                <a href="{% url 'index' %}" class="logo">
+                    <img src="{% static 'img/logo.png' %}" alt="Рязань.Аренда" class="logo__img" />
+                </a>
+            </div>
+
+            <nav class="header__nav">
+                <a href="{% url 'catalog' %}" class="header__nav-link {% if active_catalog %}header__nav-link--active{% endif %}">Каталог жилья</a>
+                <a href="#" class="header__nav-link">Карта жилья</a>
+                <a href="{% url 'service' %}" class="header__nav-link {% if active_service %}header__nav-link--active{% endif %}">О сервисе</a>
+                <a href="#" class="header__nav-link">Контакты</a>
+                <a href="#" class="header__nav-link header__nav-link--highlight">Стать хозяином</a>
+            </nav>
+
+            <div class="header__right">
+                <a href="#" class="header__action header__action--favorite">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <span>Избранное</span>
+                </a>
+                <a href="#" class="header__action header__action--login">Войти</a>
+                <a href="#" class="btn btn--primary btn--small">Разместить жильё</a>
+            </div>
+
+            <button class="header__burger" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__col footer__col--brand">
+                    <a href="{% url 'index' %}" class="footer__logo">
+                        <img src="{% static 'img/logo.png' %}" alt="Рязань.Аренда" class="footer__logo-img" />
+                        <span class="footer__logo-text">Рязань.Аренда</span>
+                    </a>
+                    <p class="footer__description">
+                        Сервис аренды жилья в Рязани. Уютные квартиры, апартаменты и студии для ваших поездок.
+                    </p>
+                    <div class="footer__socials">
+                        <a href="#" class="footer__social" aria-label="Telegram">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 4.56L20.18 20.16C19.96 21.04 19.32 21.31 18.59 20.92L13.29 17.17L10.68 19.68C10.44 19.92 10.24 20.12 9.78 20.12L10.12 14.74L18.46 7.15C18.82 6.83 18.39 6.65 17.92 6.96L7.79 13.3L2.53 11.65C1.67 11.39 1.65 10.77 2.71 10.37L22.2 3.31C22.94 3.01 23.6 3.46 24 4.56Z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="VK">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M21.58 6.44C21.76 5.96 21.58 5.58 20.96 5.58H18.33C17.79 5.58 17.53 5.88 17.37 6.22C17.37 6.22 16.07 9.08 14.27 10.99C13.78 11.48 13.56 11.65 13.29 11.65C13.11 11.65 12.83 11.48 12.83 11V6.44C12.83 5.88 12.65 5.58 12.2 5.58H8.83C8.5 5.58 8.3 5.86 8.3 6.12C8.3 6.66 9.1 6.8 9.2 8.7V11.79C9.2 12.51 9.06 12.65 8.79 12.65C8.06 12.65 6.47 9.78 5.17 6.55C4.92 5.91 4.66 5.58 4.1 5.58H1.45C0.85 5.58 0.74 5.88 0.74 6.22C0.74 6.83 1.48 9.92 3.91 13.93C5.64 16.82 8.14 18.42 10.38 18.42C11.8 18.42 11.96 18.1 11.96 17.55V15.14C11.96 14.55 12.12 14.39 12.52 14.39C12.82 14.39 13.35 14.56 14.71 15.87C16.22 17.34 16.45 18.42 17.28 18.42H19.91C20.47 18.42 20.75 18.1 20.61 17.56C20.45 17 19.68 16.15 18.65 15.16C18.16 14.62 17.45 14.04 17.22 13.75C16.91 13.37 17 13.19 17.22 12.85C17.22 12.85 19.9 9.08 20.38 8.02C21.2 6.44 21.58 6.44 21.58 6.44Z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="YouTube">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.5 6.2C23.4 5.7 23.1 5.2 22.6 4.9C22.1 4.6 21.4 4.4 20.4 4.3C19.4 4.1 18.2 4 16.8 3.9C15.4 3.8 14 3.8 12.6 3.8C11.2 3.8 9.8 3.8 8.4 3.9C7 4 5.8 4.1 4.8 4.3C3.8 4.4 3.1 4.6 2.6 4.9C2.1 5.2 1.8 5.7 1.7 6.2C1.5 7.2 1.4 8.3 1.3 9.5C1.2 10.7 1.2 11.9 1.2 13C1.2 14.1 1.2 15.3 1.3 16.5C1.4 17.7 1.5 18.8 1.7 19.8C1.8 20.3 2.1 20.8 2.6 21.1C3.1 21.4 3.8 21.6 4.8 21.7C5.8 21.9 7 22 8.4 22.1C9.8 22.2 11.2 22.2 12.6 22.2C14 22.2 15.4 22.2 16.8 22.1C18.2 22 19.4 21.9 20.4 21.7C21.4 21.6 22.1 21.4 22.6 21.1C23.1 20.8 23.4 20.3 23.5 19.8C23.7 18.8 23.8 17.7 23.9 16.5C24 15.3 24 14.1 24 13C24 11.9 24 10.7 23.9 9.5C23.8 8.3 23.7 7.2 23.5 6.2ZM9.5 16.9V9.1L16.5 13L9.5 16.9Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Каталог</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Квартиры</a></li>
+                        <li><a href="#">Студии</a></li>
+                        <li><a href="#">Апартаменты</a></li>
+                        <li><a href="#">Дома</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">О сервисе</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Как это работает</a></li>
+                        <li><a href="#">Правила</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Помощь</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Поддержка 24/7</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4 class="footer__col-title">Хозяевам</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Стать хозяином</a></li>
+                        <li><a href="#">Добавить квартиру</a></li>
+                        <li><a href="#">Управление объявлениями</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copy">&copy; 2026 Рязань.Аренда. Все права защищены.</p>
+                <div class="footer__legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

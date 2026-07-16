@@ -19,10 +19,12 @@ from django.urls import path
 
 from housing.views import index
 from housing.views import catalog
+from housing.views import service
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="index"),
     path('catalog/', catalog, name="catalog"),
+    path('service/', service, name='service'),
 ]
