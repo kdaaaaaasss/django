@@ -1,0 +1,45 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}{% block crm_title %}CRM{% endblock %} — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/crm.css' %}" />{% endblock %}
+
+{% block content %}
+<div class="crm">
+    <aside class="crm__side">
+        <div class="crm__brand">Рязань.Аренда <span class="crm__brand-badge">CRM</span></div>
+
+        <div class="crm__side-title">Обзор</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'crm_dashboard' %}" class="sidebar-nav__item {% if active == 'dashboard' %}sidebar-nav__item--active{% endif %}">Дашборд</a>
+        </nav>
+
+        <div class="crm__side-title">Контент</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'crm_moderation' %}" class="sidebar-nav__item {% if active == 'moderation' %}sidebar-nav__item--active{% endif %}">Модерация <span class="sidebar-nav__count">{{ nav_counts.moderation }}</span></a>
+            <a href="{% url 'crm_listings' %}" class="sidebar-nav__item {% if active == 'listings' %}sidebar-nav__item--active{% endif %}">Объявления</a>
+            <a href="{% url 'crm_reviews' %}" class="sidebar-nav__item {% if active == 'reviews' %}sidebar-nav__item--active{% endif %}">Отзывы <span class="sidebar-nav__count">{{ nav_counts.reviews }}</span></a>
+        </nav>
+
+        <div class="crm__side-title">Операции</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'crm_bookings' %}" class="sidebar-nav__item {% if active == 'bookings' %}sidebar-nav__item--active{% endif %}">Брони</a>
+            <a href="{% url 'crm_tickets' %}" class="sidebar-nav__item {% if active == 'tickets' %}sidebar-nav__item--active{% endif %}">Тикеты <span class="sidebar-nav__count">{{ nav_counts.tickets }}</span></a>
+        </nav>
+
+        <div class="crm__side-title">Люди</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'crm_users' %}" class="sidebar-nav__item {% if active == 'users' %}sidebar-nav__item--active{% endif %}">Пользователи</a>
+        </nav>
+
+        <div class="crm__side-title">Система</div>
+        <nav class="sidebar-nav">
+            <a href="/admin/" class="sidebar-nav__item">Django admin</a>
+            <a href="{% url 'styleguide' %}" class="sidebar-nav__item">Дизайн-система</a>
+            <a href="{% url 'index' %}" class="sidebar-nav__item">← На сайт</a>
+        </nav>
+    </aside>
+
+    <main class="crm__main">{% block crm_content %}{% endblock %}</main>
+</div>
+{% endblock %}

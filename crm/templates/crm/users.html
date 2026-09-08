@@ -1,0 +1,68 @@
+{% extends "crm/_layout.html" %}
+{% block crm_title %}Пользователи{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Пользователи</h1>
+    <p class="crm__subtitle">Роли, активность и блокировки.</p></div>
+    <a href="/admin/auth/user/add/" class="btn btn--primary">+ Создать пользователя</a>
+</div>
+
+<form class="crm__toolbar" method="get">
+    <input class="input crm__search" name="q" value="{{ q }}" placeholder="Поиск по логину или email" />
+    <select class="select" name="role" style="width:auto">
+        <option value="">Все роли</option>
+        <option value="tenant" {% if current_role == 'tenant' %}selected{% endif %}>Арендатор</option>
+        <option value="landlord" {% if current_role == 'landlord' %}selected{% endif %}>Арендодатель</option>
+    </select>
+    <label class="check"><input type="checkbox" name="blocked" value="1" /> Только заблокированные</label>
+    <button class="btn btn--ghost btn--sm">Применить</button>
+</form>
+
+<div class="table-wrap">
+    <table class="table">
+        <thead><tr><th>Пользователь</th><th>Email</th><th>Роль</th><th>Объявл.</th><th>Броней</th><th>Регистрация</th><th>Статус</th><th></th></tr></thead>
+        <tbody>
+        {% for u in rows %}
+        <tr>
+            <td>
+                <div class="row" style="gap:var(--space-2)">
+                    <span class="avatar avatar--sm">{{ u.username|first|upper }}</span>
+                    <strong>{{ u.username }}</strong>
+                    {% if u.is_staff %}<span class="badge badge--info">staff</span>{% endif %}
+                </div>
+            </td>
+            <td class="muted">{{ u.email|default:"—" }}</td>
+            <td>{{ u.profile.get_role_display }}</td>
+            <td>{{ u.listings_n }}</td>
+            <td>{{ u.bookings_n }}</td>
+            <td class="faint nowrap">{{ u.date_joined|date:"d.m.Y" }}</td>
+            <td>
+                {% if u.profile.is_blocked %}<span class="badge badge--danger badge--dot">заблокирован</span>
+                {% else %}<span class="badge badge--success badge--dot">активен</span>{% endif %}
+            </td>
+            <td>
+                <div class="dropdown" data-dropdown>
+                    <button class="btn btn--ghost btn--sm" data-dropdown-toggle>⋯</button>
+                    <div class="dropdown__menu">
+                        <a class="dropdown__item" href="/admin/auth/user/{{ u.pk }}/change/">Открыть в админке</a>
+                        <form method="post" action="{% url 'crm_user_action' u.pk 'make_landlord' %}">{% csrf_token %}
+                            <button class="dropdown__item" style="width:100%;border:0;background:none;text-align:left;cursor:pointer">Сделать арендодателем</button></form>
+                        <div class="dropdown__sep"></div>
+                        {% if u.profile.is_blocked %}
+                        <form method="post" action="{% url 'crm_user_action' u.pk 'unblock' %}">{% csrf_token %}
+                            <button class="dropdown__item" style="width:100%;border:0;background:none;text-align:left;cursor:pointer">Разблокировать</button></form>
+                        {% else %}
+                        <form method="post" action="{% url 'crm_user_action' u.pk 'block' %}">{% csrf_token %}
+                            <button class="dropdown__item" style="width:100%;border:0;background:none;text-align:left;cursor:pointer;color:var(--color-danger)">Заблокировать</button></form>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include "crm/_pagination.html" with page=rows %}
+{% endblock %}

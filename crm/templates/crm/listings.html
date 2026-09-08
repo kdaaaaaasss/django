@@ -1,0 +1,59 @@
+{% extends "crm/_layout.html" %}
+{% load housing_extras %}
+{% block crm_title %}Объявления{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Объявления</h1>
+    <p class="crm__subtitle">Все объекты платформы: статусы, просмотры, брони.</p></div>
+</div>
+
+<form class="crm__toolbar" method="get">
+    <input class="input crm__search" name="q" value="{{ q }}" placeholder="Поиск по названию или хозяину" />
+    <select class="select" name="status" style="width:auto">
+        <option value="">Все статусы</option>
+        {% for value, label in statuses %}
+        <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn--ghost btn--sm">Применить</button>
+</form>
+
+<div class="table-wrap">
+    <table class="table">
+        <thead><tr><th>Объект</th><th>Хозяин</th><th>Статус</th><th>Цена</th><th>Комн.</th><th>★</th><th>Просм.</th><th>Броней</th><th>Создано</th><th></th></tr></thead>
+        <tbody>
+        {% for h in rows %}
+        <tr>
+            <td><a href="{{ h.get_absolute_url }}"><strong>{{ h.title }}</strong></a></td>
+            <td>{{ h.owner.username|default:"—" }}</td>
+            <td><span class="badge badge--{{ h.status_tone }} badge--dot">{{ h.get_status_display }}</span></td>
+            <td>{{ h.price|money }} ₽</td>
+            <td>{{ h.rooms }}</td>
+            <td>{{ h.rating|floatformat:1 }}</td>
+            <td>{{ h.views_count }}</td>
+            <td>{{ h.bookings_n }}</td>
+            <td class="faint nowrap">{{ h.created_at|date:"d.m.Y" }}</td>
+            <td>
+                <div class="dropdown" data-dropdown>
+                    <button class="btn btn--ghost btn--sm" data-dropdown-toggle>⋯</button>
+                    <div class="dropdown__menu">
+                        <a class="dropdown__item" href="{{ h.get_absolute_url }}">Открыть на сайте</a>
+                        <a class="dropdown__item" href="/admin/housing/housing/{{ h.pk }}/change/">Редактировать</a>
+                        <div class="dropdown__sep"></div>
+                        <form method="post" action="{% url 'crm_moderate' h.pk 'approve' %}">{% csrf_token %}
+                            <button class="dropdown__item" style="width:100%;border:0;background:none;text-align:left;cursor:pointer">Одобрить</button></form>
+                        <form method="post" action="{% url 'crm_moderate' h.pk 'feature' %}">{% csrf_token %}
+                            <button class="dropdown__item" style="width:100%;border:0;background:none;text-align:left;cursor:pointer">
+                                {% if h.is_featured %}Убрать с главной{% else %}На главную{% endif %}</button></form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% empty %}<tr><td colspan="10" class="muted text-center" style="padding:var(--space-6)">Ничего не найдено.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include "crm/_pagination.html" with page=rows %}
+{% endblock %}

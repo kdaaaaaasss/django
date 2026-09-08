@@ -1,0 +1,30 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Уведомления{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Уведомления</h1>
+    <p class="dash__subtitle">События по вашим броням, объявлениям и обращениям.</p></div>
+    {% if unread_count %}
+    <form method="post" action="{% url 'notifications_read_all' %}">
+        {% csrf_token %}
+        <button class="btn btn--ghost btn--sm">Отметить всё прочитанным</button>
+    </form>
+    {% endif %}
+</div>
+
+{% for n in items %}
+<a href="{{ n.url|default:'#' }}" class="ticket-row">
+    <div class="row" style="gap:var(--space-3);flex-wrap:nowrap">
+        <span class="avatar avatar--sm">{{ n.icon }}</span>
+        <div>
+            <div class="ticket-row__subject">{{ n.verb }}</div>
+            <div class="ticket-row__meta">{{ n.get_kind_display }} · {{ n.created_at|date:"d.m.Y H:i" }}</div>
+        </div>
+    </div>
+    {% if not n.is_read %}<span class="badge badge--accent">новое</span>{% endif %}
+</a>
+{% empty %}
+<div class="empty-state">Уведомлений пока нет.</div>
+{% endfor %}
+{% endblock %}

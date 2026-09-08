@@ -1,0 +1,42 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Обращение #{{ ticket.pk }}{% endblock %}
+
+{% block dash_content %}
+<a href="{% url 'ticket_list' %}" class="page__back">← К списку обращений</a>
+<div class="dash__head">
+    <div>
+        <h1 class="dash__title">#{{ ticket.pk }} · {{ ticket.subject }}</h1>
+        <p class="dash__subtitle">{{ ticket.category_label }} · создан {{ ticket.created_at|date:"d.m.Y" }}
+        {% if ticket.assigned_to %} · ведёт {{ ticket.assigned_to.username }}{% endif %}</p>
+    </div>
+    <span class="badge badge--{{ ticket.status_tone }} badge--dot">{{ ticket.status_label }}</span>
+</div>
+
+<div class="panel">
+    <div class="thread">
+        {% for m in thread %}
+        <div class="msg {% if m.is_staff %}msg--staff{% endif %}">
+            <span class="avatar avatar--sm">{{ m.author.username|first|upper }}</span>
+            <div>
+                <div class="msg__meta">{{ m.author.username }}{% if m.is_staff %} · поддержка{% endif %} · {{ m.created_at|date:"d.m.Y H:i" }}</div>
+                <div class="msg__body">{{ m.body|linebreaksbr }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form class="form" method="post" style="margin-top:var(--space-5)">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="row">
+            <button class="btn btn--primary">Отправить</button>
+        </div>
+    </form>
+    {% if ticket.status != 'closed' %}
+    <form method="post" action="{% url 'ticket_close' ticket.pk %}" style="margin-top:var(--space-3)">
+        {% csrf_token %}
+        <button class="btn btn--ghost btn--sm">Вопрос решён — закрыть</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

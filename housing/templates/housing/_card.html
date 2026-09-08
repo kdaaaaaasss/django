@@ -1,0 +1,44 @@
+{% load housing_extras %}
+<article class="lc{% if compact %} lc--compact{% endif %}">
+    <a href="{{ housing.get_absolute_url }}" class="lc__link">
+        <div class="lc__media">
+            <img src="{% cover_url housing %}" alt="{{ housing.title }}" class="lc__img" loading="lazy" />
+            {% if housing.deal_type == 'sale' %}
+                <span class="lc__tag">Продажа</span>
+            {% elif housing.is_featured %}
+                <span class="lc__tag">Популярное</span>
+            {% endif %}
+        </div>
+
+        <div class="lc__body">
+            <div class="lc__row">
+                <h3 class="lc__title">{{ housing.title }}</h3>
+                {% if housing.rating %}<span class="lc__rating">★ {{ housing.rating|floatformat:1 }}</span>{% endif %}
+            </div>
+            <p class="lc__sub">{{ housing.address|default:"Рязань" }}</p>
+            <p class="lc__sub">{{ housing.rooms }} {{ housing.rooms|plural_ru:"комната,комнаты,комнат" }} · до {{ housing.guests }} {{ housing.guests|plural_ru:"гостя,гостей,гостей" }}</p>
+            <p class="lc__price">
+                <strong>{{ housing.price|money }} ₽</strong>
+                <span>{% if housing.deal_type == 'rent' %}за ночь{% endif %}</span>
+            </p>
+        </div>
+    </a>
+
+    <button class="lc__fav" type="button" aria-label="В избранное"
+            onclick="this.classList.toggle('is-active');toast(this.classList.contains('is-active')?'Добавлено в избранное':'Убрано из избранного')">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+    </button>
+
+    {% if show_manage and housing.owner_id == user.id %}
+        <div class="lc__manage">
+            {% if housing.is_published %}<span class="badge badge--success badge--dot">опубликовано</span>
+            {% else %}<span class="badge badge--warning badge--dot">на модерации</span>{% endif %}
+            {% if housing.is_featured %}<span class="badge badge--accent">на главной</span>{% endif %}
+            <span class="grow"></span>
+            <a href="{% url 'housing_edit' housing.pk %}" class="btn btn--ghost btn--sm">Изменить</a>
+            <a href="{% url 'housing_delete' housing.pk %}" class="btn btn--ghost btn--sm">Удалить</a>
+        </div>
+    {% endif %}
+</article>

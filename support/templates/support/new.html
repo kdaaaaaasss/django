@@ -1,0 +1,22 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Новое обращение{% endblock %}
+
+{% block dash_content %}
+<a href="{% url 'ticket_list' %}" class="page__back">← К списку обращений</a>
+<div class="dash__head">
+    <div><h1 class="dash__title">Новое обращение</h1>
+    <p class="dash__subtitle">Опишите проблему подробно — так решим быстрее.</p></div>
+</div>
+
+<div class="panel" style="max-width:640px">
+    <form class="form" method="post" data-loading>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+        <div class="row">
+            <button class="btn btn--primary">Отправить</button>
+            <a href="{% url 'ticket_list' %}" class="btn btn--ghost">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

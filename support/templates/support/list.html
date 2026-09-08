@@ -1,0 +1,22 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Поддержка{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Служба поддержки</h1>
+    <p class="dash__subtitle">Отвечаем в течение рабочего дня.</p></div>
+    <a href="{% url 'ticket_new' %}" class="btn btn--primary">+ Новое обращение</a>
+</div>
+
+{% for t in tickets %}
+<a href="{% url 'ticket_detail' t.pk %}" class="ticket-row">
+    <div>
+        <div class="ticket-row__subject">#{{ t.pk }} · {{ t.subject }}</div>
+        <div class="ticket-row__meta">{{ t.category_label }} · обновлён {{ t.updated_at|date:"d.m.Y H:i" }} · {{ t.messages.count }} сообщ.</div>
+    </div>
+    <span class="badge badge--{{ t.status_tone }} badge--dot">{{ t.status_label }}</span>
+</a>
+{% empty %}
+<div class="empty-state">У вас нет обращений. <a href="{% url 'ticket_new' %}">Создать →</a></div>
+{% endfor %}
+{% endblock %}

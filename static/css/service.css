@@ -1,0 +1,89 @@
+.service-hero {
+    background: var(--color-dark);
+    color: #fff;
+    text-align: center;
+    padding: 64px 0;
+}
+.service-hero__title { font-size: var(--text-4xl); font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+.service-hero__subtitle { font-size: var(--text-lg); opacity: .85; max-width: 620px; margin: 0 auto; }
+
+.mission__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+}
+.mission__title { font-size: var(--text-3xl); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 18px; }
+.mission__text { color: var(--color-ink-muted); line-height: var(--leading-normal); margin-bottom: 14px; }
+.mission__image { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+.mission__image img { width: 100%; height: 100%; object-fit: cover; min-height: 300px; }
+
+.advantages__title,
+.how__title,
+.contacts__title {
+    text-align: center;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 36px;
+}
+.advantages__grid,
+.how__steps,
+.stats__grid,
+.contacts__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.advantage,
+.step,
+.contact {
+    text-align: center;
+    padding: 24px 18px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+.advantage__icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    margin-bottom: 14px;
+}
+.advantage__title,
+.step__title { font-size: var(--text-base); font-weight: 600; margin-bottom: 8px; }
+.advantage__text,
+.step__text { font-size: var(--text-sm); color: var(--color-ink-muted); }
+
+.step__number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff; font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.stats { background: var(--color-accent); color: #fff; }
+.stats__grid { text-align: center; }
+.stat__number { display: block; font-size: var(--text-4xl); font-weight: 800; letter-spacing: -0.5px; }
+.stat__label { font-size: var(--text-sm); opacity: .9; }
+
+.contact__title { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .5px; color: var(--color-ink-faint); margin-bottom: 8px; }
+.contact__link,
+.contact__text { font-size: var(--text-base); font-weight: 500; color: var(--color-ink); }
+.contact__link:hover { color: var(--color-accent); }
+
+@media (max-width: 1100px) {
+    .advantages__grid, .how__steps, .stats__grid, .contacts__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+    .mission__inner { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 560px) {
+    .advantages__grid, .how__steps, .stats__grid, .contacts__grid { grid-template-columns: 1fr; }
+    .service-hero__title { font-size: var(--text-3xl); }
+}

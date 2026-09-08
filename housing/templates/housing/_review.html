@@ -1,0 +1,13 @@
+<article class="review">
+    <div class="review__head">
+        <span class="avatar avatar--sm">{{ r.author.username|first|upper }}</span>
+        <div class="grow">
+            <div class="review__author">{{ r.author.username }}</div>
+            <div class="review__date">{{ r.housing.title }} · {{ r.created_at|date:"d.m.Y" }}</div>
+        </div>
+        <span class="stars"><span class="stars__on">{% for _ in r.stars_on %}★{% endfor %}</span>{% for _ in r.stars_off %}★{% endfor %}</span>
+        {% if r.status != 'published' %}<span class="badge badge--{{ r.status_tone }} badge--dot">{{ r.status_label }}</span>{% endif %}
+    </div>
+    <p class="review__text">{{ r.text }}</p>
+    {% if r.reply %}<div class="review__reply"><strong>Ответ хозяина:</strong> {{ r.reply }}</div>{% endif %}
+</article>

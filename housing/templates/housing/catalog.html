@@ -1,0 +1,191 @@
+{% extends "housing/base.html" %}
+{% load static housing_extras %}
+
+{% block title %}Каталог жилья в Рязани — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/catalog.css' %}" />{% endblock %}
+
+{% block content %}
+<div class="searchbar">
+    <div class="container">
+        <form class="sbar" action="" method="get" data-strip-empty>
+            <label class="sbar__cell">
+                <span class="sbar__label">Тип сделки</span>
+                <select class="sbar__input" name="deal_type">
+                    <option value="">Любой</option>
+                    <option value="rent" {% if get.deal_type == 'rent' %}selected{% endif %}>Аренда</option>
+                    <option value="sale" {% if get.deal_type == 'sale' %}selected{% endif %}>Продажа</option>
+                </select>
+            </label>
+            <span class="sbar__div"></span>
+
+            <label class="sbar__cell">
+                <span class="sbar__label">Комнат</span>
+                <select class="sbar__input" name="rooms">
+                    <option value="">Не важно</option>
+                    {% for n in "1234" %}<option value="{{ n }}" {% if get.rooms == n %}selected{% endif %}>{{ n }}{% if n == '4' %}+{% endif %}</option>{% endfor %}
+                </select>
+            </label>
+            <span class="sbar__div"></span>
+
+            <label class="sbar__cell">
+                <span class="sbar__label">Гостей</span>
+                <input class="sbar__input" type="number" name="guests" min="1" max="20"
+                       placeholder="Сколько человек" value="{{ get.guests }}" />
+            </label>
+            <span class="sbar__div"></span>
+
+            <label class="sbar__cell sbar__cell--price">
+                <span class="sbar__label">Цена за ночь</span>
+                <span class="sbar__pair">
+                    <input class="sbar__input" type="number" name="price_min" min="0" placeholder="от" value="{{ get.price_min }}" />
+                    <span class="sbar__dash">–</span>
+                    <input class="sbar__input" type="number" name="price_max" min="0" placeholder="до" value="{{ get.price_max }}" />
+                </span>
+            </label>
+
+            <input type="hidden" name="sort" value="{{ get.sort }}" />
+            <button class="sbar__go" type="submit" aria-label="Найти">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+                </svg>
+            </button>
+        </form>
+
+        <div class="sbar__extra">
+            <button class="btn btn--ghost btn--sm" data-modal-open="more-filters">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+                Фильтры
+            </button>
+            {% for f in active_filters %}
+                <a class="fchip" href="{{ f.url }}">{{ f.label }}<span class="fchip__x">×</span></a>
+            {% endfor %}
+            {% if active_filters %}
+                <a class="fchip fchip--reset" href="{% url 'catalog' %}">Сбросить всё</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<main class="page">
+    <div class="container">
+        <div class="chead">
+            <div>
+                <h1 class="chead__title">Жильё в Рязани</h1>
+                <p class="chead__count">{{ total }} {{ total|plural_ru:"вариант,варианта,вариантов" }}{% if active_filters %} по вашему запросу{% endif %}</p>
+            </div>
+
+            <div class="chead__tools">
+                <div class="dropdown" data-dropdown>
+                    <button class="btn btn--ghost btn--sm" data-dropdown-toggle>{{ sort_label }} ▾</button>
+                    <div class="dropdown__menu">
+                        {% for value, label in sort_options %}
+                        <a class="dropdown__item" href="?{{ querystring }}&sort={{ value }}">{{ label }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn btn--ghost btn--sm" id="map-toggle">Показать карту</button>
+            </div>
+        </div>
+
+        <div class="clayout" id="clayout">
+            <div class="listing-grid">
+                {% for housing in housings %}
+                    {% include "housing/_card.html" %}
+                {% empty %}
+                    <div class="empty-state">
+                        <div style="font-size:34px;margin-bottom:var(--space-3)">🔍</div>
+                        <strong>Ничего не нашлось</strong>
+                        <p style="margin-top:var(--space-2)">Попробуйте расширить диапазон цены или убрать часть фильтров.</p>
+                        <a href="{% url 'catalog' %}" class="btn btn--primary btn--sm" style="margin-top:var(--space-4)">Сбросить фильтры</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <aside class="cmap" id="cmap" hidden>
+                <div class="cmap__inner">
+                    <div class="cmap__grid"></div>
+                    {% for housing in housings|slice:":6" %}
+                    <span class="cmap__pin" style="left:{{ forloop.counter0|add:1 }}5%;top:{{ forloop.counter }}2%">{{ housing.price|money }} ₽</span>
+                    {% endfor %}
+                    <div class="cmap__note">Интерактивная карта — в следующей версии</div>
+                </div>
+            </aside>
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="pagination">
+            {% if page_obj.has_previous %}
+                <a class="pagination__link" href="?{{ querystring }}&page={{ page_obj.previous_page_number }}">←</a>
+            {% else %}<span class="pagination__link pagination__link--disabled">←</span>{% endif %}
+            {% for n in page_obj.paginator.page_range %}
+                {% if n == page_obj.number %}<span class="pagination__link pagination__link--active">{{ n }}</span>
+                {% else %}<a class="pagination__link" href="?{{ querystring }}&page={{ n }}">{{ n }}</a>{% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a class="pagination__link" href="?{{ querystring }}&page={{ page_obj.next_page_number }}">→</a>
+            {% else %}<span class="pagination__link pagination__link--disabled">→</span>{% endif %}
+        </nav>
+        {% endif %}
+    </div>
+</main>
+
+<div class="modal-backdrop" id="more-filters" hidden>
+    <div class="modal">
+        <div class="modal__head"><span class="modal__title">Фильтры</span><button class="modal__close" data-modal-close>×</button></div>
+        <form method="get" action="{% url 'catalog' %}" data-strip-empty>
+            <div class="modal__body stack-5">
+                <div class="field">
+                    <span class="field__label">Тип жилья</span>
+                    <div class="filters__chips">
+                        {% for value, label in housing_types %}
+                        <label class="chip"><input type="radio" name="type" value="{{ value }}" hidden {% if get.type == value %}checked{% endif %} />{{ label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="field">
+                    <span class="field__label">Цена за ночь, ₽</span>
+                    <div class="sbar__pair">
+                        <input class="input" type="number" name="price_min" placeholder="от" value="{{ get.price_min }}" />
+                        <span class="sbar__dash">–</span>
+                        <input class="input" type="number" name="price_max" placeholder="до" value="{{ get.price_max }}" />
+                    </div>
+                </div>
+                <div class="field">
+                    <span class="field__label">Удобства</span>
+                    <div class="filters__chips">
+                        {% for a in amenities %}
+                        <label class="chip"><input type="checkbox" name="amenity" value="{{ a.code }}" hidden />{{ a.icon }} {{ a.name }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal__foot">
+                <a href="{% url 'catalog' %}" class="btn btn--ghost">Очистить</a>
+                <button class="btn btn--primary">Показать {{ total }} {{ total|plural_ru:"вариант,варианта,вариантов" }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    // Убираем пустые параметры из URL при отправке формы
+    document.querySelectorAll('form[data-strip-empty]').forEach(function (f) {
+        f.addEventListener('submit', function () {
+            f.querySelectorAll('input, select').forEach(function (el) {
+                if (!el.value) el.disabled = true;
+            });
+        });
+    });
+    // Показать/скрыть карту
+    var mt = document.getElementById('map-toggle');
+    if (mt) mt.addEventListener('click', function () {
+        var map = document.getElementById('cmap');
+        var on = map.hidden;
+        map.hidden = !on;
+        document.getElementById('clayout').classList.toggle('clayout--map', on);
+        mt.textContent = on ? 'Скрыть карту' : 'Показать карту';
+    });
+</script>
+{% endblock %}

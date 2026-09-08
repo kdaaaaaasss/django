@@ -1,0 +1,43 @@
+{% extends "housing/base.html" %}
+{% load static %}
+{% block title %}Помощь и поддержка — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/service.css' %}" />{% endblock %}
+
+{% block content %}
+<section class="service-hero">
+    <div class="container">
+        <h1 class="service-hero__title">Чем помочь?</h1>
+        <p class="service-hero__subtitle">Ответы на частые вопросы. Не нашли нужного — напишите в поддержку, отвечаем в течение рабочего дня.</p>
+    </div>
+</section>
+
+<main class="page"><div class="container">
+    <div class="crm__cols" style="display:grid;grid-template-columns:2fr 1fr;gap:var(--space-6);align-items:start">
+        <div>
+            <h2 class="page__title" style="margin-bottom:var(--space-4)">Частые вопросы</h2>
+            {% for q, a in faq %}
+            <details class="panel" style="margin-bottom:var(--space-3)">
+                <summary style="cursor:pointer;font-weight:600;font-size:var(--text-md)">{{ q }}</summary>
+                <p class="muted" style="margin-top:var(--space-3);font-size:var(--text-sm)">{{ a }}</p>
+            </details>
+            {% endfor %}
+        </div>
+
+        <aside class="panel">
+            <div class="panel__title">Связаться с нами</div>
+            <p class="muted text-sm" style="margin-bottom:var(--space-4)">Опишите проблему — создадим обращение и ответим в личном кабинете.</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'ticket_new' %}" class="btn btn--primary btn--block">Написать в поддержку</a>
+                <a href="{% url 'ticket_list' %}" class="btn btn--ghost btn--block" style="margin-top:var(--space-2)">Мои обращения</a>
+            {% else %}
+                <a href="{% url 'login' %}?next={% url 'ticket_new' %}" class="btn btn--primary btn--block">Войти и написать</a>
+            {% endif %}
+            <div class="stack-2 text-sm" style="margin-top:var(--space-5)">
+                <div class="row row--between"><span class="muted">Email</span><a href="mailto:help@ryazan-arenda.ru">help@ryazan-arenda.ru</a></div>
+                <div class="row row--between"><span class="muted">Телефон</span><a href="tel:+74951234567">+7 (495) 123-45-67</a></div>
+                <div class="row row--between"><span class="muted">Часы работы</span><span>9:00–21:00</span></div>
+            </div>
+        </aside>
+    </div>
+</div></main>
+{% endblock %}

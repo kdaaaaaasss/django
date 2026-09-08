@@ -1,0 +1,28 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}Вход — Рязань.Аренда{% endblock %}
+
+{% block content %}
+<main class="page">
+    <div class="container">
+        <div class="auth-card narrow">
+            <div class="page-head">
+                <h1 class="page-head__title">Вход</h1>
+                <p class="page-head__subtitle">Войдите, чтобы размещать и бронировать жильё.</p>
+            </div>
+            {% if form.errors %}
+                <div class="message message--error">Неверное имя пользователя или пароль.</div>
+            {% endif %}
+            <form class="form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <button type="submit" class="btn btn--primary btn--block">Войти</button>
+            </form>
+            <p class="auth-card__alt"><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+            <p class="auth-card__alt">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+        </div>
+    </div>
+</main>
+{% endblock %}

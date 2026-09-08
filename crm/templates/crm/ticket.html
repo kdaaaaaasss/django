@@ -1,0 +1,60 @@
+{% extends "crm/_layout.html" %}
+{% block crm_title %}Тикет #{{ ticket.pk }}{% endblock %}
+
+{% block crm_content %}
+<a href="{% url 'crm_tickets' %}" class="page__back">← В инбокс</a>
+<div class="crm__head">
+    <div><h1 class="crm__title">#{{ ticket.pk }} · {{ ticket.subject }}</h1>
+    <p class="crm__subtitle">{{ ticket.category_label }} · от {{ ticket.user.username }} · создан {{ ticket.created_at|date:"d.m.Y H:i" }}</p></div>
+    <form method="post" class="row">
+        {% csrf_token %}
+        {{ staff_form.assigned_to }}{{ staff_form.status }}{{ staff_form.priority }}
+        <button class="btn btn--primary btn--sm">Сохранить</button>
+    </form>
+</div>
+
+<div class="crm__cols">
+    <div class="panel">
+        <div class="thread">
+            {% for m in thread %}
+            <div class="msg {% if m.is_staff %}msg--staff{% endif %}">
+                <span class="avatar avatar--sm">{{ m.author.username|first|upper }}</span>
+                <div>
+                    <div class="msg__meta">{{ m.author.username }}{% if m.is_staff %} · поддержка{% endif %} · {{ m.created_at|date:"d.m.Y H:i" }}</div>
+                    <div class="msg__body">{{ m.body|linebreaksbr }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <form class="form" method="post" style="margin-top:var(--space-5)">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="row">
+                <button class="btn btn--primary" name="reply" value="1">Отправить</button>
+                <button class="btn btn--ghost" name="reply" value="1" formnovalidate
+                        onclick="this.form.insertAdjacentHTML('beforeend','<input type=hidden name=close value=1>')">Отправить и закрыть</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel">
+        <div class="panel__title">О пользователе</div>
+        <div class="row" style="margin-bottom:var(--space-4)">
+            <span class="avatar avatar--lg">{{ ticket.user.username|first|upper }}</span>
+            <div>
+                <div style="font-weight:600">{{ ticket.user.username }}</div>
+                <div class="faint text-sm">{{ ticket.user.email|default:"email не указан" }}</div>
+                <span class="badge badge--accent">{{ ticket.user.profile.get_role_display }}</span>
+            </div>
+        </div>
+        <div class="stack-2 text-sm">
+            <div class="row row--between"><span class="muted">Регистрация</span><span>{{ ticket.user.date_joined|date:"d.m.Y" }}</span></div>
+            <div class="row row--between"><span class="muted">Броней</span><span>{{ stats.bookings }}</span></div>
+            <div class="row row--between"><span class="muted">Объявлений</span><span>{{ stats.listings }}</span></div>
+            <div class="row row--between"><span class="muted">Обращений</span><span>{{ stats.tickets }}</span></div>
+            <div class="row row--between"><span class="muted">Телефон</span><span>{{ ticket.user.profile.phone|default:"—" }}</span></div>
+        </div>
+        <a href="{% url 'crm_users' %}?q={{ ticket.user.username }}" class="btn btn--ghost btn--sm btn--block" style="margin-top:var(--space-4)">Профиль в CRM</a>
+    </div>
+</div>
+{% endblock %}

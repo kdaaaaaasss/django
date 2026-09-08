@@ -1,0 +1,60 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}{% block dash_title %}Кабинет{% endblock %} — Рязань.Аренда{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    {% block dash_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<main class="dash">
+    <div class="container container--wide">
+        <div class="dash__layout">
+            <aside class="dash__side">
+                <div class="dash__user">
+                    <span class="avatar">{{ user.username|first|upper }}</span>
+                    <div>
+                        <div class="dash__user-name">{{ user.username }}</div>
+                        <span class="badge badge--accent">{{ user.profile.get_role_display }}</span>
+                    </div>
+                </div>
+
+                <div class="dash__side-group">
+                    <div class="dash__side-title">Поездки</div>
+                    <nav class="sidebar-nav">
+                        <a href="{% url 'dashboard' %}" class="sidebar-nav__item {% if active == 'overview' %}sidebar-nav__item--active{% endif %}">Обзор</a>
+                        <a href="{% url 'my_bookings' %}" class="sidebar-nav__item {% if active == 'bookings' %}sidebar-nav__item--active{% endif %}">Мои бронирования <span class="sidebar-nav__count">{{ counts.bookings }}</span></a>
+                        <a href="{% url 'favorites' %}" class="sidebar-nav__item {% if active == 'favorites' %}sidebar-nav__item--active{% endif %}">Избранное</a>
+                        <a href="{% url 'my_reviews' %}" class="sidebar-nav__item {% if active == 'reviews' %}sidebar-nav__item--active{% endif %}">Отзывы</a>
+                    </nav>
+                </div>
+
+                <div class="dash__side-group">
+                    <div class="dash__side-title">Хозяину</div>
+                    <nav class="sidebar-nav">
+                        <a href="{% url 'my_listings' %}" class="sidebar-nav__item {% if active == 'listings' %}sidebar-nav__item--active{% endif %}">Мои объявления <span class="sidebar-nav__count">{{ counts.listings }}</span></a>
+                        <a href="{% url 'booking_requests' %}" class="sidebar-nav__item {% if active == 'requests' %}sidebar-nav__item--active{% endif %}">Заявки <span class="sidebar-nav__count">{{ counts.requests }}</span></a>
+                        <a href="{% url 'host_calendar' %}" class="sidebar-nav__item {% if active == 'calendar' %}sidebar-nav__item--active{% endif %}">Календарь</a>
+                        <a href="{% url 'earnings' %}" class="sidebar-nav__item {% if active == 'earnings' %}sidebar-nav__item--active{% endif %}">Доход</a>
+                    </nav>
+                </div>
+
+                <div class="dash__side-group">
+                    <div class="dash__side-title">Аккаунт</div>
+                    <nav class="sidebar-nav">
+                        <a href="{% url 'notifications' %}" class="sidebar-nav__item {% if active == 'notifications' %}sidebar-nav__item--active{% endif %}">Уведомления{% if unread_count %} <span class="sidebar-nav__count">{{ unread_count }}</span>{% endif %}</a>
+                        <a href="{% url 'dashboard_settings' %}" class="sidebar-nav__item {% if active == 'settings' %}sidebar-nav__item--active{% endif %}">Настройки</a>
+                        <a href="{% url 'ticket_list' %}" class="sidebar-nav__item {% if active == 'support' %}sidebar-nav__item--active{% endif %}">Поддержка <span class="sidebar-nav__count">{{ counts.tickets }}</span></a>
+                        {% if user.is_staff %}<a href="{% url 'crm_dashboard' %}" class="sidebar-nav__item">CRM-панель</a>{% endif %}
+                    </nav>
+                </div>
+            </aside>
+
+            <div class="dash__content">
+                {% block dash_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

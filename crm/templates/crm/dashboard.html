@@ -1,0 +1,51 @@
+{% extends "crm/_layout.html" %}
+{% block crm_title %}Дашборд{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Дашборд</h1>
+    <p class="crm__subtitle">Ключевые показатели платформы и что требует внимания.</p></div>
+    <a href="{% url 'crm_moderation' %}" class="btn btn--primary">Очередь модерации</a>
+</div>
+
+<div class="stat-grid" style="margin-bottom:var(--space-6)">
+    {% for s in stats %}
+    <div class="stat-tile">
+        <div class="stat-tile__label">{{ s.label }}</div>
+        <div class="stat-tile__value">{{ s.value }}</div>
+        {% if s.delta %}<div class="stat-tile__delta {% if s.tone == 'up' %}stat-tile__delta--up{% elif s.tone == 'down' %}stat-tile__delta--down{% endif %}">{{ s.delta }}</div>{% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<div class="crm__cols">
+    <div class="panel">
+        <div class="panel__title">Ждут модерации</div>
+        {% for h in queue %}
+        <div class="row row--between" style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border)">
+            <div>
+                <a href="{{ h.get_absolute_url }}" style="font-weight:600">{{ h.title }}</a>
+                <div class="text-sm faint">{{ h.owner.username }} · {{ h.city }} · {{ h.price|floatformat:0 }} ₽ · {{ h.rooms }} комн.</div>
+            </div>
+            <form method="post" action="{% url 'crm_moderate' h.pk 'approve' %}">
+                {% csrf_token %}
+                <button class="btn btn--sm btn--primary">Одобрить</button>
+            </form>
+        </div>
+        {% empty %}<div class="empty-state">Очередь пуста 🎉</div>{% endfor %}
+        <a href="{% url 'crm_moderation' %}" class="section__link" style="display:inline-block;margin-top:var(--space-3)">Вся очередь →</a>
+    </div>
+
+    <div class="panel">
+        <div class="panel__title">Последние события</div>
+        <div class="feed">
+            {% for a in activity %}
+            <div class="feed__item">
+                <span class="feed__when">{{ a.when|timesince }}</span>
+                <span><span class="feed__who">{{ a.who.username }}</span> {{ a.what }}</span>
+            </div>
+            {% empty %}<div class="muted text-sm">Событий пока нет.</div>{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

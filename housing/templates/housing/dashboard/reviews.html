@@ -1,0 +1,61 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% load housing_extras %}
+{% block dash_title %}Отзывы{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Отзывы</h1>
+    <p class="dash__subtitle">Оставленные вами и полученные на ваши объекты.</p></div>
+</div>
+
+{% for b in awaiting %}
+<div class="panel" style="margin-bottom:var(--space-4)">
+    <div class="panel__title">Оцените поездку: {{ b.housing.title }}</div>
+    <p class="muted text-sm">{{ b.check_in|date:"d.m.Y" }} → {{ b.check_out|date:"d.m.Y" }} · {{ b.nights }} {{ b.nights|plural_ru:"ночь,ночи,ночей" }}</p>
+    <form class="form" method="post" action="{% url 'review_create' b.pk %}" style="margin-top:var(--space-4)">
+        {% csrf_token %}
+        <div class="field">
+            <span class="field__label">Ваша оценка</span>
+            <div class="rating-input">
+                {% for i in "54321" %}
+                <input type="radio" name="rating" id="r{{ b.pk }}-{{ i }}" value="{{ i }}" required />
+                <label for="r{{ b.pk }}-{{ i }}">★</label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="field">
+            <label class="field__label" for="t{{ b.pk }}">Комментарий</label>
+            <textarea class="textarea" id="t{{ b.pk }}" name="text" required
+                      placeholder="Что понравилось, что можно улучшить?"></textarea>
+        </div>
+        <div><button class="btn btn--primary">Отправить отзыв</button></div>
+    </form>
+</div>
+{% endfor %}
+
+<div class="tabs" data-tabs data-tabs-scope="#rv-panels">
+    <button class="tab" data-tab="written">Мои отзывы ({{ written|length }})</button>
+    <button class="tab" data-tab="received">Полученные ({{ received|length }})</button>
+</div>
+
+<div id="rv-panels" style="padding-top:var(--space-4)">
+    <div data-tab-panel="written">
+        {% for r in written %}{% include "housing/_review.html" %}{% empty %}
+        <div class="empty-state">Вы ещё не оставляли отзывов.</div>{% endfor %}
+    </div>
+    <div data-tab-panel="received" hidden>
+        {% for r in received %}
+            {% include "housing/_review.html" %}
+            {% if not r.reply %}
+            <form class="form" method="post" action="{% url 'review_reply' r.pk %}"
+                  style="margin:calc(var(--space-2)*-1) 0 var(--space-3);padding:var(--space-4);background:var(--color-surface-alt);border-radius:0 0 var(--radius-md) var(--radius-md)">
+                {% csrf_token %}
+                <textarea class="textarea" name="reply" rows="2" placeholder="Ответить на отзыв" required></textarea>
+                <div><button class="btn btn--ghost btn--sm">Ответить</button></div>
+            </form>
+            {% endif %}
+        {% empty %}
+        <div class="empty-state">Отзывов на ваши объекты пока нет.</div>{% endfor %}
+    </div>
+</div>
+{% endblock %}

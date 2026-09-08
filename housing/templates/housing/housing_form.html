@@ -1,0 +1,90 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}{% if housing %}Редактирование объявления{% else %}Новое объявление{% endif %} — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/catalog.css' %}" />{% endblock %}
+
+{% block content %}
+<main class="page">
+    <div class="container">
+        <a href="{% url 'my_listings' %}" class="page__back">← К моим объявлениям</a>
+        <div class="page__head">
+            <h1 class="page__title">{% if housing %}Редактирование объявления{% else %}Новое объявление{% endif %}</h1>
+            <p class="page__subtitle">
+                {% if housing and housing.status == 'rejected' %}
+                    Исправьте замечания и отправьте объявление на модерацию снова.
+                {% else %}
+                    Заполните карточку объекта. После отправки объявление уходит на проверку — до 24 часов.
+                {% endif %}
+            </p>
+        </div>
+
+        {% if housing and housing.status == 'rejected' %}
+        <div class="alert alert--danger" style="max-width:680px;margin-bottom:var(--space-5)">
+            <div><strong>Причина отказа:</strong> {{ housing.rejection_reason }}</div>
+        </div>
+        {% endif %}
+
+        <form class="form form-card" method="post" enctype="multipart/form-data" data-loading>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <fieldset class="fset">
+                <legend class="fset__legend"><span class="fset__num">1</span> Основное</legend>
+                {% include "housing/_field.html" with f=form.title %}
+                {% include "housing/_field.html" with f=form.short_description %}
+                {% include "housing/_field.html" with f=form.description %}
+            </fieldset>
+
+            <fieldset class="fset">
+                <legend class="fset__legend"><span class="fset__num">2</span> Адрес</legend>
+                <div class="fset__row">
+                    {% include "housing/_field.html" with f=form.city %}
+                    {% include "housing/_field.html" with f=form.address %}
+                </div>
+            </fieldset>
+
+            <fieldset class="fset">
+                <legend class="fset__legend"><span class="fset__num">3</span> Параметры и цена</legend>
+                <div class="fset__row">
+                    {% include "housing/_field.html" with f=form.housing_type %}
+                    {% include "housing/_field.html" with f=form.deal_type %}
+                </div>
+                <div class="fset__row">
+                    {% include "housing/_field.html" with f=form.price %}
+                    {% include "housing/_field.html" with f=form.rooms %}
+                    {% include "housing/_field.html" with f=form.guests %}
+                    {% include "housing/_field.html" with f=form.area %}
+                </div>
+            </fieldset>
+
+            <fieldset class="fset">
+                <legend class="fset__legend"><span class="fset__num">4</span> Фото</legend>
+                {% include "housing/_field.html" with f=form.image %}
+                {% if not housing.image %}
+                <span class="field__hint">Без фото подставится обложка-заглушка. С фотографиями объявление проходит модерацию быстрее.</span>
+                {% endif %}
+            </fieldset>
+
+            <fieldset class="fset">
+                <legend class="fset__legend"><span class="fset__num">5</span> Удобства</legend>
+                <div class="filters__chips">
+                    {% for cb in form.amenities %}
+                        <label class="chip {% if cb.data.selected %}chip--active{% endif %}">{{ cb.tag }} {{ cb.choice_label }}</label>
+                    {% endfor %}
+                </div>
+                {% if form.amenities.errors %}<span class="field__error">{{ form.amenities.errors.0 }}</span>{% endif %}
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" name="submit" value="1" class="btn btn--primary">
+                    {% if housing and housing.status == 'approved' %}Сохранить и отправить на проверку
+                    {% else %}Отправить на модерацию{% endif %}
+                </button>
+                <button type="submit" class="btn btn--ghost">Сохранить черновик</button>
+                <a href="{% url 'my_listings' %}" class="btn btn--link">Отмена</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

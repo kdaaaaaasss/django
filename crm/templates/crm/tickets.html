@@ -1,0 +1,42 @@
+{% extends "crm/_layout.html" %}
+{% block crm_title %}Тикеты{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Инбокс поддержки</h1>
+    <p class="crm__subtitle">Обращения пользователей. Назначайте ответственного и отвечайте.</p></div>
+</div>
+
+<form class="crm__toolbar" method="get">
+    <input class="input crm__search" name="q" value="{{ q }}" placeholder="Поиск по теме или пользователю" />
+    <select class="select" name="status" style="width:auto">
+        <option value="">Все статусы</option>
+        {% for value, label in statuses %}
+        <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn--ghost btn--sm">Применить</button>
+</form>
+
+<div class="table-wrap">
+    <table class="table">
+        <thead><tr><th>#</th><th>Тема</th><th>Категория</th><th>Пользователь</th><th>Приоритет</th><th>Исполнитель</th><th>Статус</th><th>Обновлён</th></tr></thead>
+        <tbody>
+        {% for t in rows %}
+        <tr onclick="location.href='{% url 'crm_ticket' t.pk %}'" style="cursor:pointer">
+            <td class="faint">{{ t.pk }}</td>
+            <td><strong>{{ t.subject }}</strong><div class="faint text-sm">{{ t.msgs }} сообщ.</div></td>
+            <td>{{ t.category_label }}</td>
+            <td>{{ t.user.username }}</td>
+            <td><span class="badge badge--{{ t.priority_tone }}">{{ t.get_priority_display }}</span></td>
+            <td>{{ t.assigned_to.username|default:"—" }}</td>
+            <td><span class="badge badge--{{ t.status_tone }} badge--dot">{{ t.status_label }}</span></td>
+            <td class="faint nowrap">{{ t.updated_at|date:"d.m.Y H:i" }}</td>
+        </tr>
+        {% empty %}<tr><td colspan="8" class="muted text-center" style="padding:var(--space-6)">Обращений нет.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include "crm/_pagination.html" with page=rows %}
+{% endblock %}

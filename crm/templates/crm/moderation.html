@@ -1,0 +1,65 @@
+{% extends "crm/_layout.html" %}
+{% load housing_extras %}
+{% block crm_title %}Модерация{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Очередь модерации</h1>
+    <p class="crm__subtitle">{{ queue.paginator.count }} {{ queue.paginator.count|plural_ru:"объявление,объявления,объявлений" }} ждут решения.</p></div>
+</div>
+
+<form class="crm__toolbar" method="get">
+    <input class="input crm__search" name="q" value="{{ q }}" placeholder="Поиск по заголовку или хозяину" />
+    <button class="btn btn--ghost btn--sm">Найти</button>
+    {% if q %}<a href="{% url 'crm_moderation' %}" class="btn btn--link">Сбросить</a>{% endif %}
+</form>
+
+{% for h in queue %}
+<article class="mod-card">
+    <img src="{% cover_url h %}" alt="" class="mod-card__thumb" />
+    <div>
+        <div class="row" style="gap:var(--space-2)">
+            <a href="{{ h.get_absolute_url }}" class="mod-card__title">{{ h.title }}</a>
+            <span class="badge badge--{{ h.status_tone }} badge--dot">{{ h.get_status_display }}</span>
+        </div>
+        <div class="mod-card__meta">
+            {{ h.owner.username }} · {{ h.address }}, {{ h.city }} · {{ h.get_housing_type_display }} ·
+            {{ h.rooms }} комн. · до {{ h.guests }} гостей · {{ h.price|money }} ₽
+        </div>
+        <p class="mod-card__desc">{{ h.description|truncatewords:30 }}</p>
+        <div class="row" style="margin-top:var(--space-3)">
+            <span class="badge">Подано {{ h.updated_at|date:"d.m.Y H:i" }}</span>
+            {% for a in h.amenities.all|slice:":4" %}<span class="badge">{{ a.name }}</span>{% endfor %}
+            <a href="{{ h.get_absolute_url }}" class="btn btn--link">Открыть карточку</a>
+        </div>
+    </div>
+    <div class="mod-card__actions">
+        <form method="post" action="{% url 'crm_moderate' h.pk 'approve' %}">
+            {% csrf_token %}<button class="btn btn--primary btn--sm btn--block">Одобрить</button>
+        </form>
+        <button class="btn btn--ghost btn--sm" data-modal-open="reject-{{ h.pk }}">Отклонить</button>
+    </div>
+</article>
+
+<div class="modal-backdrop" id="reject-{{ h.pk }}" hidden>
+    <div class="modal">
+        <form method="post" action="{% url 'crm_moderate' h.pk 'reject' %}">
+            {% csrf_token %}
+            <div class="modal__head"><span class="modal__title">Отклонить «{{ h.title }}»</span><button type="button" class="modal__close" data-modal-close>×</button></div>
+            <div class="modal__body form">
+                {{ reject_form.as_p }}
+                <span class="field__hint">Причина уйдёт автору в уведомлении.</span>
+            </div>
+            <div class="modal__foot">
+                <button type="button" class="btn btn--ghost" data-modal-close>Отмена</button>
+                <button class="btn btn--danger">Отклонить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% empty %}
+<div class="empty-state">Очередь модерации пуста 🎉</div>
+{% endfor %}
+
+{% include "crm/_pagination.html" with page=queue %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Заявки на бронь{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Заявки на бронь</h1>
+    <p class="dash__subtitle">Гости ждут вашего решения. Подтвердите или отклоните заявку.</p></div>
+</div>
+
+{% if grouped.pending %}
+<div class="alert alert--warning" style="margin-bottom:var(--space-4)">
+    {{ grouped.pending|length }} заявк(а/и) ждут ответа. Отвечайте в течение 24 часов — это влияет на рейтинг.
+</div>
+{% endif %}
+
+<div class="tabs" data-tabs data-tabs-scope="#rq-panels">
+    <button class="tab" data-tab="pending">Новые ({{ grouped.pending|length }})</button>
+    <button class="tab" data-tab="upcoming">Подтверждённые ({{ grouped.upcoming|length }})</button>
+    <button class="tab" data-tab="past">Завершённые ({{ grouped.past|length }})</button>
+</div>
+
+<div id="rq-panels" style="padding-top:var(--space-4)">
+    <div data-tab-panel="pending">
+        {% for b in grouped.pending %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Новых заявок нет.</div>{% endfor %}
+    </div>
+    <div data-tab-panel="upcoming" hidden>
+        {% for b in grouped.upcoming %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Нет подтверждённых броней.</div>{% endfor %}
+    </div>
+    <div data-tab-panel="past" hidden>
+        {% for b in grouped.past %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Нет завершённых.</div>{% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% load housing_extras %}
+{% block dash_title %}Календарь{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Календарь занятости</h1>
+    <p class="dash__subtitle">{{ month|date:"F Y" }} — подтверждённые брони по вашим объектам.</p></div>
+</div>
+
+<div class="cal">
+    <div class="cal__grid">
+        {% for wd in weekdays %}<div class="cal__wd">{{ wd }}</div>{% endfor %}
+        {% for week in grid %}{% for d in week %}
+        <div class="cal__day {% if d.other %}cal__day--other{% endif %} {% if d.today %}cal__day--today{% endif %} {% if d.booking %}cal__day--booked{% endif %}"
+             {% if d.booking %}title="{{ d.booking.housing.title }} — {{ d.booking.guest.username }}"{% endif %}>{{ d.date.day }}</div>
+        {% endfor %}{% endfor %}
+    </div>
+    <div class="cal__legend">
+        <span><span class="cal__dot" style="background:var(--color-accent)"></span>Занято</span>
+        <span><span class="cal__dot" style="background:var(--color-surface-alt)"></span>Свободно</span>
+        <span><span class="cal__dot" style="border:2px solid var(--color-accent)"></span>Сегодня</span>
+    </div>
+</div>
+
+{% if upcoming %}
+<div class="panel" style="margin-top:var(--space-5)">
+    <div class="panel__title">Ближайшие заезды</div>
+    {% for b in upcoming %}
+    <div class="row row--between" style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border)">
+        <div>
+            <div style="font-weight:600">{{ b.housing.title }}</div>
+            <div class="faint text-sm">{{ b.guest.username }} · {{ b.check_in|date:"d.m" }} → {{ b.check_out|date:"d.m.Y" }}</div>
+        </div>
+        <span class="badge badge--{{ b.status_tone }} badge--dot">{{ b.status_label }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

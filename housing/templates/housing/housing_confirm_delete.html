@@ -1,0 +1,21 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}Удаление объявления — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/catalog.css' %}" />{% endblock %}
+
+{% block content %}
+<main class="page">
+    <div class="container">
+        <div class="form-card">
+            <h1 class="page__title">Удалить объявление?</h1>
+            <p class="page__subtitle">«{{ housing.title }}» будет удалено безвозвратно.</p>
+            <form method="post" class="form-actions">
+                {% csrf_token %}
+                <button type="submit" class="btn btn--primary">Да, удалить</button>
+                <a href="{% url 'my_listings' %}" class="btn btn--ghost">Отмена</a>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

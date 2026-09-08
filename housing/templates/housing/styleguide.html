@@ -1,0 +1,224 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block title %}Дизайн-система — Рязань.Аренда{% endblock %}
+
+{% block css %}
+<style>
+    .sg { padding: var(--space-6) 0 var(--space-9); }
+    .sg h2 { font-size: var(--text-xl); margin: var(--space-8) 0 var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+    .sg h2:first-of-type { border-top: none; padding-top: 0; margin-top: var(--space-5); }
+    .sg h3 { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: .05em; color: var(--color-ink-faint); margin: var(--space-5) 0 var(--space-3); }
+    .sg-row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+    .sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-3); }
+    .sw { border-radius: var(--radius-md); border: 1px solid var(--color-border); overflow: hidden; font-size: var(--text-xs); }
+    .sw__c { height: 56px; }
+    .sw__n { padding: 6px 10px; background: var(--color-surface); }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="sg container">
+    <div class="page__head">
+        <h1 class="page__title">Дизайн-система</h1>
+        <p class="page__subtitle">Токены и компоненты «Рязань.Аренда». Источник: <code>tokens.css</code>, <code>components.css</code>.</p>
+    </div>
+
+    <h2>Цвета</h2>
+    <div class="sg-grid">
+        {% for name, var in colors %}
+        <div class="sw"><div class="sw__c" style="background:var({{ var }})"></div><div class="sw__n">{{ name }}</div></div>
+        {% endfor %}
+    </div>
+
+    <h2>Типографика</h2>
+    <p style="font-size:var(--text-4xl);font-weight:800">Заголовок 4xl</p>
+    <p style="font-size:var(--text-2xl);font-weight:700">Заголовок 2xl</p>
+    <p style="font-size:var(--text-lg);font-weight:600">Заголовок lg</p>
+    <p style="font-size:var(--text-base)">Базовый текст — 15px, line-height 1.6. Быстрая коричневая лиса.</p>
+    <p style="font-size:var(--text-sm)" class="muted">Второстепенный текст sm</p>
+    <p style="font-size:var(--text-xs)" class="faint">Подпись xs</p>
+
+    <h2>Кнопки</h2>
+    <h3>Варианты</h3>
+    <div class="sg-row">
+        <button class="btn btn--primary">Основная</button>
+        <button class="btn">По умолчанию</button>
+        <button class="btn btn--ghost">Ghost</button>
+        <button class="btn btn--subtle">Subtle</button>
+        <button class="btn btn--danger">Danger</button>
+        <a class="btn btn--link">Ссылка-кнопка</a>
+    </div>
+    <h3>Размеры и состояния</h3>
+    <div class="sg-row">
+        <button class="btn btn--primary btn--lg">Large</button>
+        <button class="btn btn--primary">Medium</button>
+        <button class="btn btn--primary btn--sm">Small</button>
+        <button class="btn btn--primary is-loading">Loading</button>
+        <button class="btn btn--primary" disabled>Disabled</button>
+    </div>
+
+    <h2>Бейджи и чипы</h2>
+    <div class="sg-row">
+        <span class="badge">neutral</span>
+        <span class="badge badge--accent">accent</span>
+        <span class="badge badge--success badge--dot">одобрено</span>
+        <span class="badge badge--warning badge--dot">на модерации</span>
+        <span class="badge badge--danger badge--dot">отклонено</span>
+        <span class="badge badge--info">info</span>
+    </div>
+    <div class="sg-row" style="margin-top:var(--space-3)">
+        <span class="chip">Wi-Fi</span>
+        <span class="chip chip--active">Кухня ✓</span>
+        <span class="chip">Парковка</span>
+    </div>
+
+    <h2>Поля формы</h2>
+    <div style="max-width:420px" class="stack-4">
+        <div class="field">
+            <label class="field__label">Заголовок <span class="req">*</span></label>
+            <input class="input" placeholder="Например: Уютная студия у Кремля" />
+            <span class="field__hint">До 64 символов</span>
+        </div>
+        <div class="field field--invalid">
+            <label class="field__label">Цена</label>
+            <input class="input input--invalid" value="-100" />
+            <span class="field__error">Цена должна быть положительной</span>
+        </div>
+        <div class="field">
+            <label class="field__label">Описание</label>
+            <textarea class="textarea" placeholder="Расскажите об объекте"></textarea>
+        </div>
+        <label class="check"><input type="checkbox" checked /> Показывать телефон в объявлении</label>
+        <label class="switch"><input type="checkbox" checked /><span class="switch__track"></span></label>
+    </div>
+
+    <h2>Алерты</h2>
+    <div class="stack-3" style="max-width:520px">
+        <div class="alert alert--success">Объявление одобрено и опубликовано.</div>
+        <div class="alert alert--warning">Объявление отправлено на модерацию.</div>
+        <div class="alert alert--danger">Даты пересекаются с подтверждённой бронью.</div>
+        <div class="alert alert--info">Оставить отзыв можно после завершения поездки.</div>
+    </div>
+
+    <h2>Тосты</h2>
+    <button class="btn btn--ghost" data-toast="Изменения сохранены">Показать тост</button>
+
+    <h2>Табы</h2>
+    <div class="tabs" data-tabs>
+        <button class="tab" data-tab="a">Предстоящие</button>
+        <button class="tab" data-tab="b">Прошедшие</button>
+        <button class="tab" data-tab="c">Отменённые</button>
+    </div>
+    <div style="padding:var(--space-4) 0">
+        <div data-tab-panel="a">Панель «Предстоящие»</div>
+        <div data-tab-panel="b" hidden>Панель «Прошедшие»</div>
+        <div data-tab-panel="c" hidden>Панель «Отменённые»</div>
+    </div>
+
+    <h2>Dropdown</h2>
+    <div class="dropdown" data-dropdown>
+        <button class="btn btn--ghost" data-dropdown-toggle>Действия ▾</button>
+        <div class="dropdown__menu">
+            <div class="dropdown__item">Редактировать</div>
+            <div class="dropdown__item">Снять с публикации</div>
+            <div class="dropdown__sep"></div>
+            <div class="dropdown__item" style="color:var(--color-danger)">Удалить</div>
+        </div>
+    </div>
+
+    <h2>Модалка</h2>
+    <button class="btn btn--primary" data-modal-open="sg-modal">Открыть модалку</button>
+    <div class="modal-backdrop" id="sg-modal" hidden>
+        <div class="modal">
+            <div class="modal__head"><span class="modal__title">Подтвердите действие</span><button class="modal__close" data-modal-close>×</button></div>
+            <div class="modal__body">Отклонить объявление «Студия у Кремля»? Укажите причину для автора.</div>
+            <div class="modal__foot">
+                <button class="btn btn--ghost" data-modal-close>Отмена</button>
+                <button class="btn btn--danger" data-modal-close>Отклонить</button>
+            </div>
+        </div>
+    </div>
+
+    <h2>Таблица</h2>
+    <div class="table-wrap">
+        <table class="table">
+            <thead><tr><th>Объект</th><th>Хозяин</th><th>Статус</th><th>Цена</th></tr></thead>
+            <tbody>
+                <tr><td>Студия у Кремля</td><td>ivan</td><td><span class="badge badge--warning badge--dot">на модерации</span></td><td>2 500 ₽</td></tr>
+                <tr><td>Квартира на Почтовой</td><td>maria</td><td><span class="badge badge--success badge--dot">одобрено</span></td><td>3 200 ₽</td></tr>
+                <tr><td>Дом за городом</td><td>petr</td><td><span class="badge badge--danger badge--dot">отклонено</span></td><td>6 000 ₽</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Пагинация</h2>
+    <div class="pagination">
+        <span class="pagination__link pagination__link--disabled">←</span>
+        <span class="pagination__link pagination__link--active">1</span>
+        <a class="pagination__link">2</a>
+        <a class="pagination__link">3</a>
+        <span class="pagination__dots">…</span>
+        <a class="pagination__link">12</a>
+        <a class="pagination__link">→</a>
+    </div>
+
+    <h2>Хлебные крошки</h2>
+    <nav class="breadcrumbs">
+        <a href="#">Каталог</a><span class="breadcrumbs__sep">/</span>
+        <a href="#">Рязань</a><span class="breadcrumbs__sep">/</span>
+        <span>Студия у Кремля</span>
+    </nav>
+
+    <h2>Аватар и рейтинг</h2>
+    <div class="sg-row">
+        <span class="avatar avatar--sm">И</span>
+        <span class="avatar">МК</span>
+        <span class="avatar avatar--lg">П</span>
+        <span class="stars"><span class="stars__on">★★★★</span>★</span>
+    </div>
+    <h3>Ввод рейтинга</h3>
+    <div class="rating-input">
+        <input type="radio" name="r" id="r5" value="5" /><label for="r5">★</label>
+        <input type="radio" name="r" id="r4" value="4" /><label for="r4">★</label>
+        <input type="radio" name="r" id="r3" value="3" /><label for="r3">★</label>
+        <input type="radio" name="r" id="r2" value="2" /><label for="r2">★</label>
+        <input type="radio" name="r" id="r1" value="1" /><label for="r1">★</label>
+    </div>
+
+    <h2>Stat-tiles</h2>
+    <div class="stat-grid">
+        <div class="stat-tile"><div class="stat-tile__label">Пользователи</div><div class="stat-tile__value">1 284</div><div class="stat-tile__delta stat-tile__delta--up">+4.2% за неделю</div></div>
+        <div class="stat-tile"><div class="stat-tile__label">На модерации</div><div class="stat-tile__value">17</div></div>
+        <div class="stat-tile"><div class="stat-tile__label">Открытые тикеты</div><div class="stat-tile__value">6</div><div class="stat-tile__delta stat-tile__delta--down">−2 за день</div></div>
+        <div class="stat-tile"><div class="stat-tile__label">Брони сегодня</div><div class="stat-tile__value">23</div></div>
+    </div>
+
+    <h2>Stepper</h2>
+    <div class="stepper">
+        <span class="step-pill step-pill--done"><span class="step-pill__num">✓</span> Основное</span>
+        <span class="step-pill step-pill--active"><span class="step-pill__num">2</span> Адрес</span>
+        <span class="step-pill"><span class="step-pill__num">3</span> Цена</span>
+        <span class="step-pill"><span class="step-pill__num">4</span> Фото</span>
+        <span class="step-pill"><span class="step-pill__num">5</span> Проверка</span>
+    </div>
+
+    <h2>Sidebar-nav (CRM)</h2>
+    <nav class="sidebar-nav" style="max-width:248px">
+        <a class="sidebar-nav__item sidebar-nav__item--active">Дашборд</a>
+        <a class="sidebar-nav__item">Модерация <span class="sidebar-nav__count">17</span></a>
+        <a class="sidebar-nav__item">Брони</a>
+        <a class="sidebar-nav__item">Тикеты <span class="sidebar-nav__count">6</span></a>
+        <a class="sidebar-nav__item">Отзывы</a>
+        <a class="sidebar-nav__item">Пользователи</a>
+    </nav>
+
+    <h2>Карточка объявления</h2>
+    <div class="listing-grid" style="max-width:820px">
+        {% for h in demo_cards %}{% include "housing/_card.html" with housing=h %}{% endfor %}
+    </div>
+
+    <h2>Empty state</h2>
+    <div class="empty-state">У вас пока нет объявлений. <a href="#">Разместите первое →</a></div>
+</main>
+{% endblock %}

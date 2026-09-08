@@ -1,0 +1,49 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% load housing_extras %}
+{% block dash_title %}Обзор{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div>
+        <h1 class="dash__title">Привет, {{ user.username }}!</h1>
+        <p class="dash__subtitle">Коротко о ваших поездках и объявлениях.</p>
+    </div>
+    <a href="{% url 'housing_add' %}" class="btn btn--primary">+ Разместить жильё</a>
+</div>
+
+<div class="stat-grid" style="margin-bottom:var(--space-6)">
+    <div class="stat-tile"><div class="stat-tile__label">Активные брони</div><div class="stat-tile__value">{{ grouped.upcoming|length }}</div></div>
+    <div class="stat-tile"><div class="stat-tile__label">Ждут ответа</div><div class="stat-tile__value">{{ grouped.pending|length }}</div></div>
+    <div class="stat-tile"><div class="stat-tile__label">Мои объявления</div><div class="stat-tile__value">{{ counts.listings }}</div></div>
+    <div class="stat-tile"><div class="stat-tile__label">Заработано</div><div class="stat-tile__value">{{ earned|money }} ₽</div></div>
+</div>
+
+{% if pending_reviews %}
+<div class="alert alert--info" style="margin-bottom:var(--space-5)">
+    Вы завершили {{ pending_reviews|length }} {{ pending_reviews|length|plural_ru:"поездку,поездки,поездок" }} без отзыва.
+    <a href="{% url 'my_reviews' %}" style="font-weight:600">Оценить →</a>
+</div>
+{% endif %}
+
+{% if notifications %}
+<div class="panel" style="margin-bottom:var(--space-5)">
+    <div class="row row--between" style="margin-bottom:var(--space-3)">
+        <span style="font-size:var(--text-md);font-weight:700">Уведомления</span>
+        <a href="{% url 'notifications' %}" class="section__link">Все →</a>
+    </div>
+    <div class="feed">
+        {% for n in notifications %}
+        <div class="feed__item">
+            <span class="feed__when">{{ n.created_at|timesince }}</span>
+            <span>{{ n.icon }} {{ n.verb }}{% if not n.is_read %} <span class="badge badge--accent">новое</span>{% endif %}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="section__header"><h2 class="section__title" style="font-size:var(--text-md)">Ближайшие поездки</h2><a href="{% url 'my_bookings' %}" class="section__link">Все →</a></div>
+{% for b in grouped.upcoming %}{% include "housing/dashboard/_booking.html" %}{% empty %}
+<div class="empty-state">Подтверждённых броней нет. <a href="{% url 'catalog' %}">Найти жильё →</a></div>
+{% endfor %}
+{% endblock %}

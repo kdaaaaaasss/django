@@ -1,0 +1,96 @@
+:root {
+
+    --color-accent:        #E63963;
+    --color-accent-hover:  #d42e58;
+    --color-accent-active: #bd2049;
+    --color-accent-soft:   rgba(230, 57, 99, 0.10);
+    --color-accent-ring:   rgba(230, 57, 99, 0.35);
+
+    --color-bg:            #F6F6F7;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #F1F1F3;
+    --color-surface-sunk:  #ECECEF;
+    --color-ink:           #1E1F23;
+    --color-ink-muted:     #585B62;
+    --color-ink-faint:     #8A8D94;
+    --color-border:        #E3E3E7;
+    --color-border-strong: #D0D0D6;
+    --color-dark:          #1E1F23;
+    --color-overlay:       rgba(20, 20, 25, 0.55);
+
+    --color-success:       #1a7f37;   --color-success-soft: #e6f5ec;
+    --color-warning:       #9a6700;   --color-warning-soft: #fcf1da;
+    --color-danger:        #c02b45;   --color-danger-soft:  #fdecef;
+    --color-info:          #1f6feb;   --color-info-soft:    #e7f0fe;
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --text-xs:   12px;
+    --text-sm:   14px;
+    --text-base: 15px;
+    --text-md:   17px;
+    --text-lg:   20px;
+    --text-xl:   24px;
+    --text-2xl:  30px;
+    --text-3xl:  38px;
+    --text-4xl:  46px;
+    --leading-tight:  1.25;
+    --leading-normal: 1.6;
+    --tracking-tight: -0.02em;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+    --radius-xs:  6px;
+    --radius-sm:  10px;
+    --radius-md:  14px;
+    --radius-lg:  20px;
+    --radius-xl:  28px;
+    --radius-pill: 999px;
+
+    --shadow-xs: 0 1px 2px rgba(16, 16, 24, 0.06);
+    --shadow-sm: 0 4px 14px rgba(16, 16, 24, 0.06);
+    --shadow-md: 0 12px 32px rgba(16, 16, 24, 0.10);
+    --shadow-lg: 0 24px 60px rgba(16, 16, 24, 0.16);
+    --shadow-accent: 0 8px 22px rgba(230, 57, 99, 0.26);
+
+    --container-max: 1200px;
+    --container-wide: 1360px;
+    --container-pad: 40px;
+    --header-h: 76px;
+    --section-y: 72px;
+    --crm-sidebar-w: 248px;
+
+    --control-h: 44px;
+    --control-h-sm: 36px;
+    --focus-ring: 0 0 0 3px var(--color-accent-ring);
+
+    --z-header: 100;
+    --z-dropdown: 200;
+    --z-sticky: 150;
+    --z-modal-backdrop: 900;
+    --z-modal: 1000;
+    --z-toast: 1100;
+
+    --avatar-sm: 28px;
+    --avatar-md: 40px;
+    --avatar-lg: 64px;
+
+    --transition: 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --container-pad: 20px;
+        --header-h: 60px;
+        --section-y: 48px;
+        --text-3xl: 30px;
+        --text-4xl: 34px;
+    }
+}

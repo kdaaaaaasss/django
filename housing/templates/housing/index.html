@@ -1,0 +1,129 @@
+{% extends "housing/base.html" %}
+{% load static %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'css/style.css' %}" />{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero__bg">
+        <img src="{% static 'img/hero.jpg' %}" alt="Рязань" class="hero__image" />
+        <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content container">
+        <h1 class="hero__title">Аренда и продажа жилья в Рязани</h1>
+        <p class="hero__subtitle">Найдите идеальное жильё для поездки, командировки, отдыха или жизни.</p>
+
+        <form class="search-form" action="{% url 'catalog' %}" method="get">
+            <div class="search-form__fields">
+                <div class="search-form__group">
+                    <label class="search-form__label">Тип сделки</label>
+                    <div class="search-form__input-wrapper">
+                        <select class="search-form__input" name="deal_type">
+                            <option value="">Любой</option>
+                            <option value="rent">Аренда</option>
+                            <option value="sale">Продажа</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="search-form__group">
+                    <label class="search-form__label">Комнат</label>
+                    <div class="search-form__input-wrapper">
+                        <select class="search-form__input" name="rooms">
+                            <option value="">Любое</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="search-form__group">
+                    <label class="search-form__label">Цена до</label>
+                    <div class="search-form__input-wrapper">
+                        <input type="number" class="search-form__input" name="price_max" placeholder="₽" min="0" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn--primary btn--large search-form__btn">Найти жильё</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="popular section">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">Популярное в Рязани</h2>
+            <a href="{% url 'catalog' %}" class="section__link">Смотреть все →</a>
+        </div>
+        <div class="listing-grid">
+            {% for housing in featured %}
+                {% include "housing/_card.html" %}
+            {% empty %}
+                <p class="empty-state">
+                    Пока ничего не выбрано для главной. Отметьте объявления флагом
+                    «Показывать на главной» в админке.
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="benefits section section--alt">
+    <div class="container">
+        <div class="benefits__grid">
+            <div class="benefit">
+                <div class="benefit__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                </div>
+                <h3 class="benefit__title">Проверенное жильё</h3>
+                <p class="benefit__text">Мы проверяем всех хозяев и их объекты</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3 class="benefit__title">Честные цены</h3>
+                <p class="benefit__text">Без скрытых комиссий и переплат</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 11l2 2 4-4"/></svg>
+                </div>
+                <h3 class="benefit__title">Поддержка 24/7</h3>
+                <p class="benefit__text">Мы всегда на связи и готовы помочь</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E63963" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <h3 class="benefit__title">Безопасные платежи</h3>
+                <p class="benefit__text">Ваши данные и платежи под защитой</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="why section">
+    <div class="container">
+        <div class="why__inner">
+            <div class="why__image">
+                <img src="{% static 'img/hero.jpg' %}" alt="Почему выбирают нас" />
+            </div>
+            <div class="why__content">
+                <h2 class="why__title">Почему выбирают нас</h2>
+                <p class="why__subtitle">
+                    Мы делаем аренду и покупку жилья в Рязани простой, безопасной и комфортной.
+                    Платформа объединяет проверенных хозяев и гостей, ценящих качество.
+                </p>
+                <ul class="why__list">
+                    <li class="why__item"><span class="why__check">✓</span><span>Более 500 объектов в Рязани и области</span></li>
+                    <li class="why__item"><span class="why__check">✓</span><span>Мгновенное бронирование без звонков</span></li>
+                    <li class="why__item"><span class="why__check">✓</span><span>Реальные отзывы от реальных гостей</span></li>
+                    <li class="why__item"><span class="why__check">✓</span><span>Поддержка на русском языке 24/7</span></li>
+                </ul>
+                <a href="{% url 'catalog' %}" class="btn btn--primary">Начать поиск</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

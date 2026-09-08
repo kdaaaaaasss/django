@@ -1,0 +1,49 @@
+{% extends "crm/_layout.html" %}
+{% block crm_title %}Отзывы{% endblock %}
+
+{% block crm_content %}
+<div class="crm__head">
+    <div><h1 class="crm__title">Модерация отзывов</h1>
+    <p class="crm__subtitle">Опубликованные отзывы влияют на рейтинг объекта — он пересчитывается автоматически.</p></div>
+</div>
+
+<form class="crm__toolbar" method="get">
+    <select class="select" name="status" style="width:auto">
+        <option value="">Все статусы</option>
+        {% for value, label in statuses %}
+        <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn--ghost btn--sm">Применить</button>
+</form>
+
+{% for r in rows %}
+<div class="panel" style="margin-bottom:var(--space-3)">
+    <div class="row row--between">
+        <div class="row">
+            <span class="avatar avatar--sm">{{ r.author.username|first|upper }}</span>
+            <div>
+                <div style="font-weight:600">{{ r.author.username }} → <a href="{{ r.housing.get_absolute_url }}">{{ r.housing.title }}</a></div>
+                <div class="faint text-sm">{{ r.created_at|date:"d.m.Y H:i" }}</div>
+            </div>
+            <span class="stars"><span class="stars__on">{% for _ in r.stars_on %}★{% endfor %}</span>{% for _ in r.stars_off %}★{% endfor %}</span>
+        </div>
+        {% if r.status == 'pending' %}
+        <div class="row">
+            <form method="post" action="{% url 'crm_review_action' r.pk 'publish' %}">{% csrf_token %}
+                <button class="btn btn--primary btn--sm">Опубликовать</button></form>
+            <form method="post" action="{% url 'crm_review_action' r.pk 'reject' %}">{% csrf_token %}
+                <button class="btn btn--ghost btn--sm">Отклонить</button></form>
+        </div>
+        {% else %}
+        <span class="badge badge--{{ r.status_tone }} badge--dot">{{ r.status_label }}</span>
+        {% endif %}
+    </div>
+    <p style="margin-top:var(--space-3);font-size:var(--text-sm)">{{ r.text }}</p>
+    {% if r.reply %}<div class="review__reply"><strong>Ответ хозяина:</strong> {{ r.reply }}</div>{% endif %}
+</div>
+{% empty %}
+<div class="empty-state">Отзывов нет.</div>
+{% endfor %}
+{% include "crm/_pagination.html" with page=rows %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Избранное{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Избранное</h1>
+    <p class="dash__subtitle">Объекты, которые вы сохранили, чтобы вернуться к ним позже.</p></div>
+</div>
+
+<div class="listing-grid">
+    {% for housing in listings %}{% include "housing/_card.html" %}{% empty %}
+    <div class="empty-state">В избранном пусто. <a href="{% url 'catalog' %}">Перейти в каталог →</a></div>
+    {% endfor %}
+</div>
+{% endblock %}

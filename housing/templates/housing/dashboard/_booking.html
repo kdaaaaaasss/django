@@ -1,0 +1,33 @@
+{% load housing_extras %}
+<article class="booking">
+    <a href="{{ b.housing.get_absolute_url }}"><img src="{% cover_url b.housing %}" alt="" class="booking__thumb" /></a>
+    <div>
+        <a href="{{ b.housing.get_absolute_url }}"><div class="booking__title">{{ b.housing.title }}</div></a>
+        <div class="booking__meta">
+            {{ b.housing.address|default:b.housing.city }} · {{ b.guests }} {{ b.guests|plural_ru:"гость,гостя,гостей" }} · {{ b.nights }} {{ b.nights|plural_ru:"ночь,ночи,ночей" }}
+            {% if host_actions %} · гость: <strong>{{ b.guest.username }}</strong>{% endif %}
+        </div>
+        <div class="booking__dates">{{ b.check_in|date:"d.m.Y" }} → {{ b.check_out|date:"d.m.Y" }}</div>
+        {% if b.message %}<div class="booking__msg">«{{ b.message }}»</div>{% endif %}
+    </div>
+    <div class="booking__side">
+        <span class="badge badge--{{ b.status_tone }} badge--dot">{{ b.status_label }}</span>
+        <span class="booking__total">{{ b.total_price|money }} ₽</span>
+
+        {% if host_actions and b.status == 'pending' %}
+            <div class="row">
+                <form method="post" action="{% url 'booking_action' b.pk 'confirm' %}">{% csrf_token %}
+                    <button class="btn btn--primary btn--sm">Подтвердить</button></form>
+                <form method="post" action="{% url 'booking_action' b.pk 'decline' %}">{% csrf_token %}
+                    <button class="btn btn--ghost btn--sm">Отклонить</button></form>
+            </div>
+        {% elif not host_actions %}
+            {% if b.status == 'completed' and b.can_be_reviewed %}
+                <a href="{% url 'my_reviews' %}" class="btn btn--ghost btn--sm">Оставить отзыв</a>
+            {% elif b.status == 'pending' or b.status == 'confirmed' %}
+                <form method="post" action="{% url 'booking_action' b.pk 'cancel' %}">{% csrf_token %}
+                    <button class="btn btn--ghost btn--sm">Отменить</button></form>
+            {% endif %}
+        {% endif %}
+    </div>
+</article>

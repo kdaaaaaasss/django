@@ -1,0 +1,201 @@
+{% extends "housing/base.html" %}
+{% load static housing_extras %}
+
+{% block title %}{{ housing.title }} — Рязань.Аренда{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/catalog.css' %}" />{% endblock %}
+
+{% block content %}
+<main class="page">
+    <div class="container">
+        <nav class="breadcrumbs" style="margin-bottom:var(--space-3)">
+            <a href="{% url 'index' %}">Главная</a><span class="breadcrumbs__sep">/</span>
+            <a href="{% url 'catalog' %}">Каталог</a><span class="breadcrumbs__sep">/</span>
+            <span>{{ housing.title }}</span>
+        </nav>
+
+        <div class="detail__top">
+            <div>
+                <h1 class="page__title">{{ housing.title }}</h1>
+                <div class="row" style="margin-top:var(--space-2)">
+                    <span class="card__rating">★ {{ housing.rating|floatformat:1 }}</span>
+                    <span class="muted text-sm">{{ housing.reviews_count }} {{ housing.reviews_count|plural_ru:"отзыв,отзыва,отзывов" }}</span>
+                    <span class="muted text-sm">· {{ housing.address|default:"Рязань" }}</span>
+                    <span class="badge badge--accent">{{ housing.get_deal_type_display }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <form method="post" action="{% url 'favorite_toggle' housing.pk %}">{% csrf_token %}
+                    <button class="btn btn--ghost btn--sm">♥ В избранное</button></form>
+                <button class="btn btn--ghost btn--sm" data-toast="Ссылка скопирована (демо)">Поделиться</button>
+            </div>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery__main">
+                {% if housing.image %}
+                    <img src="{{ housing.image.url }}" alt="{{ housing.title }}" />
+                {% else %}
+                    <img src="{% static 'img/apartament-1.jpg' %}" alt="{{ housing.title }}" />
+                {% endif %}
+            </div>
+            <div class="gallery__side">
+                <img src="{% static 'img/hero.jpg' %}" alt="" />
+                <img src="{% static 'img/apartament-1.jpg' %}" alt="" />
+                <img src="{% static 'img/img.png' %}" alt="" />
+                <div class="gallery__more">
+                    <img src="{% static 'img/hero.jpg' %}" alt="" />
+                    <button class="gallery__more-btn" data-toast="Галерея — в следующей версии">Ещё 6 фото</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail__layout">
+            <div class="detail__main">
+                <section class="detail__block">
+                    <h2 class="detail__h2">{{ housing.rooms }}-комнатное жильё · до {{ housing.guests }} гостей</h2>
+                    <div class="detail__facts">
+                        <span class="detail__fact">🛏 {{ housing.rooms }} комн.</span>
+                        <span class="detail__fact">👤 до {{ housing.guests }} гостей</span>
+                        <span class="detail__fact">★ {{ housing.rating|floatformat:1 }}</span>
+                        <span class="detail__fact">📍 {{ housing.address|default:"Рязань" }}</span>
+                    </div>
+                    {% if housing.short_description %}
+                        <p style="margin-top:var(--space-4);font-weight:600">{{ housing.short_description }}</p>
+                    {% endif %}
+                    <p class="detail__description">{{ housing.description|default:"Описание не заполнено."|linebreaks }}</p>
+                </section>
+
+                <section class="detail__block">
+                    <h2 class="detail__h2">Удобства</h2>
+                    <div class="amenities">
+                        {% for a in housing.amenities.all %}
+                        <div class="amenity"><span class="amenity__icon">{{ a.icon|default:"✓" }}</span>{{ a.name }}</div>
+                        {% empty %}<p class="muted text-sm">Удобства не указаны.</p>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="detail__block">
+                    <h2 class="detail__h2">Хозяин</h2>
+                    <div class="host-card">
+                        <span class="avatar avatar--lg">{{ housing.owner.username|first|upper|default:"?" }}</span>
+                        <div class="grow">
+                            <div style="font-weight:700">{{ housing.owner.username|default:"Не указан" }}</div>
+                            <div class="muted text-sm">На платформе с 2026 · отвечает за ~2 часа</div>
+                            <div class="row" style="margin-top:var(--space-2)">
+                                <span class="badge badge--success badge--dot">Проверенный хозяин</span>
+                                <span class="badge">★ 4.9</span>
+                            </div>
+                        </div>
+                        <button class="btn btn--ghost btn--sm" data-toast="Чат — в следующей версии">Написать</button>
+                    </div>
+                </section>
+
+                <section class="detail__block">
+                    <h2 class="detail__h2">Отзывы гостей</h2>
+                    <div class="rating-summary">
+                        <div class="rating-summary__score">
+                            <div class="rating-summary__num">{{ housing.rating|floatformat:1 }}</div>
+                            <span class="stars"><span class="stars__on">★★★★★</span></span>
+                            <div class="muted text-sm">{{ housing.reviews_count }} {{ housing.reviews_count|plural_ru:"отзыв,отзыва,отзывов" }}</div>
+                        </div>
+                        <div class="rating-summary__bars">
+                            {% for score, percent in breakdown %}
+                            <div class="rating-bar">
+                                <span class="rating-bar__label">{{ score }}</span>
+                                <span class="rating-bar__track"><span class="rating-bar__fill" style="width:{{ percent }}%"></span></span>
+                                <span class="rating-bar__pct">{{ percent }}%</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div style="margin-top:var(--space-5)">
+                        {% for r in reviews %}{% include "housing/_review.html" %}{% empty %}
+                        <div class="empty-state">Отзывов пока нет — станьте первым гостем.</div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <aside class="booking-widget">
+                <div class="booking-widget__price">
+                    {{ housing.price|money }} ₽
+                    <span class="card__price-period">{% if housing.deal_type == 'rent' %}/ ночь{% endif %}</span>
+                </div>
+
+                {% if housing.owner_id == user.id %}
+                    <div class="alert alert--info" style="margin:var(--space-4) 0">Это ваше объявление.</div>
+                    <a href="{% url 'housing_edit' housing.pk %}" class="btn btn--primary btn--block">Редактировать</a>
+                    <a href="{% url 'housing_delete' housing.pk %}" class="btn btn--ghost btn--block" style="margin-top:var(--space-2)">Удалить</a>
+                {% else %}
+                <form class="form" method="post" action="{% url 'booking_create' housing.pk %}" style="margin-top:var(--space-4)">
+                    {% csrf_token %}
+                    <div class="booking-widget__dates">
+                        <div class="field">
+                            <label class="field__label" for="{{ booking_form.check_in.id_for_label }}">Заезд</label>
+                            {{ booking_form.check_in }}
+                        </div>
+                        <div class="field">
+                            <label class="field__label" for="{{ booking_form.check_out.id_for_label }}">Выезд</label>
+                            {{ booking_form.check_out }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="{{ booking_form.guests.id_for_label }}">Гостей (до {{ housing.guests }})</label>
+                        {{ booking_form.guests }}
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="{{ booking_form.message.id_for_label }}">Сообщение хозяину</label>
+                        {{ booking_form.message }}
+                    </div>
+
+                    <div class="booking-widget__calc">
+                        <div class="row row--between text-sm"><span class="muted">{{ housing.price|money }} ₽ × ночь</span><span id="calc-nights">—</span></div>
+                        <div class="row row--between text-sm"><span class="muted">Сервисный сбор</span><span>0 ₽</span></div>
+                        <div class="row row--between" style="font-weight:800;padding-top:var(--space-2);border-top:1px solid var(--color-border)">
+                            <span>Итого</span><span id="calc-total">—</span></div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        <button class="btn btn--primary btn--block">Отправить заявку</button>
+                        <p class="text-sm faint text-center" style="margin-top:var(--space-2)">Хозяин подтвердит бронь — деньги спишутся только после этого</p>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn--primary btn--block">Войти и забронировать</a>
+                    {% endif %}
+                </form>
+                {% endif %}
+            </aside>
+        </div>
+
+        {% if similar %}
+        <section class="section">
+            <div class="section__header"><h2 class="section__title" style="font-size:var(--text-lg)">Похожие варианты</h2><a href="{% url 'catalog' %}" class="section__link">Весь каталог →</a></div>
+            <div class="listing-grid">
+                {% for housing in similar %}{% include "housing/_card.html" %}{% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script>
+(function () {
+    var price = {{ housing.price|floatformat:0 }};
+    var ci = document.querySelector('[name=check_in]'), co = document.querySelector('[name=check_out]');
+    var n = document.getElementById('calc-nights'), t = document.getElementById('calc-total');
+    function fmt(v) { return v.toLocaleString('ru-RU') + ' \u20bd'; }
+    function calc() {
+        if (!ci || !co || !ci.value || !co.value) return;
+        var nights = Math.round((new Date(co.value) - new Date(ci.value)) / 864e5);
+        if (nights <= 0) { n.textContent = '—'; t.textContent = '—'; return; }
+        n.textContent = nights + ' ноч. = ' + fmt(price * nights);
+        t.textContent = fmt(price * nights);
+    }
+    [ci, co].forEach(function (el) { if (el) el.addEventListener('change', calc); });
+    calc();
+})();
+</script>
+{% endblock %}

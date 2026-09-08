@@ -1,0 +1,46 @@
+{% extends "housing/dashboard/_layout.html" %}
+{% block dash_title %}Мои объявления{% endblock %}
+
+{% block dash_content %}
+<div class="dash__head">
+    <div><h1 class="dash__title">Мои объявления</h1>
+    <p class="dash__subtitle">Черновик → на модерацию → публикация. Отклонённое можно исправить и отправить снова.</p></div>
+    <a href="{% url 'housing_add' %}" class="btn btn--primary">+ Новое объявление</a>
+</div>
+
+<div class="sbar__extra" style="margin-bottom:var(--space-4)">
+    <a href="{% url 'my_listings' %}" class="fchip {% if not current_status %}fchip--reset{% endif %}">Все</a>
+    {% for value, label in statuses %}
+    <a href="?status={{ value }}" class="fchip {% if current_status != value %}fchip--reset{% endif %}">{{ label }}</a>
+    {% endfor %}
+</div>
+
+<div class="listing-grid">
+    {% for housing in listings %}
+        <div>
+            {% include "housing/_card.html" %}
+            <div class="lc__manage">
+                <span class="badge badge--{{ housing.status_tone }} badge--dot">{{ housing.get_status_display }}</span>
+                {% if housing.is_featured %}<span class="badge badge--accent">на главной</span>{% endif %}
+                <span class="badge">{{ housing.views_count }} просм.</span>
+                <span class="grow"></span>
+                <a href="{% url 'housing_edit' housing.pk %}" class="btn btn--ghost btn--sm">Изменить</a>
+                <a href="{% url 'housing_delete' housing.pk %}" class="btn btn--ghost btn--sm">Удалить</a>
+            </div>
+            {% if housing.status == 'rejected' %}
+                <div class="alert alert--danger" style="margin-top:var(--space-2)">
+                    <div><strong>Отклонено:</strong> {{ housing.rejection_reason }}</div>
+                </div>
+            {% endif %}
+            {% if housing.status == 'draft' or housing.status == 'rejected' %}
+                <form method="post" action="{% url 'housing_submit' housing.pk %}" style="margin-top:var(--space-2)">
+                    {% csrf_token %}
+                    <button class="btn btn--primary btn--sm btn--block">Отправить на модерацию</button>
+                </form>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="empty-state">У вас пока нет объявлений. <a href="{% url 'housing_add' %}">Разместите первое →</a></div>
+    {% endfor %}
+</div>
+{% endblock %}
