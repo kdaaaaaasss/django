@@ -32,11 +32,11 @@
 
             <div class="header__right">
                 {% if user.is_authenticated %}
-                    <div class="dropdown" data-dropdown>
-                        <button class="btn btn--ghost btn--sm" data-dropdown-toggle>
+                    <details class="dropdown">
+                        <summary class="btn btn--ghost btn--sm">
                             <span class="avatar avatar--sm">{{ user.username|first|upper }}</span>
                             {{ user.username }} ▾
-                        </button>
+                        </summary>
                         <div class="dropdown__menu">
                             <div style="padding:8px 12px">
                                 <div style="font-weight:600">{{ user.username }}</div>
@@ -59,7 +59,7 @@
                                 <button type="submit" class="dropdown__item" style="width:100%;background:none;border:0;text-align:left;cursor:pointer;color:var(--color-danger)">Выйти</button>
                             </form>
                         </div>
-                    </div>
+                    </details>
                     <a href="{% url 'housing_add' %}" class="btn btn--primary btn--sm">Разместить</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="header__action header__action--login">Войти</a>
@@ -67,9 +67,6 @@
                 {% endif %}
             </div>
 
-            <button class="header__burger" aria-label="Меню">
-                <span></span><span></span><span></span>
-            </button>
         </div>
     </header>
 
@@ -153,8 +150,6 @@
         </div>
     </footer>
 
-    <div class="toast-region" id="toast-region"></div>
-    <script src="{% static 'js/main.js' %}"></script>
     {% block js %}{% endblock %}
 </body>
 </html>

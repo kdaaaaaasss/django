@@ -13,20 +13,16 @@
 </div>
 {% endif %}
 
-<div class="tabs" data-tabs data-tabs-scope="#rq-panels">
-    <button class="tab" data-tab="pending">Новые ({{ grouped.pending|length }})</button>
-    <button class="tab" data-tab="upcoming">Подтверждённые ({{ grouped.upcoming|length }})</button>
-    <button class="tab" data-tab="past">Завершённые ({{ grouped.past|length }})</button>
-</div>
+<div class="tabs"><span class="tab">Все заявки</span></div>
 
 <div id="rq-panels" style="padding-top:var(--space-4)">
     <div data-tab-panel="pending">
         {% for b in grouped.pending %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Новых заявок нет.</div>{% endfor %}
     </div>
-    <div data-tab-panel="upcoming" hidden>
+    <div data-tab-panel="upcoming">
         {% for b in grouped.upcoming %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Нет подтверждённых броней.</div>{% endfor %}
     </div>
-    <div data-tab-panel="past" hidden>
+    <div data-tab-panel="past">
         {% for b in grouped.past %}{% include "housing/dashboard/_booking.html" with host_actions=True %}{% empty %}<div class="empty-state">Нет завершённых.</div>{% endfor %}
     </div>
 </div>

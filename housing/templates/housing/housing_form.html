@@ -25,7 +25,7 @@
         </div>
         {% endif %}
 
-        <form class="form form-card" method="post" enctype="multipart/form-data" data-loading>
+        <form class="form form-card" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}
 

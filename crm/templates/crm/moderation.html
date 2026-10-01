@@ -37,26 +37,14 @@
         <form method="post" action="{% url 'crm_moderate' h.pk 'approve' %}">
             {% csrf_token %}<button class="btn btn--primary btn--sm btn--block">Одобрить</button>
         </form>
-        <button class="btn btn--ghost btn--sm" data-modal-open="reject-{{ h.pk }}">Отклонить</button>
+        <form method="post" action="{% url 'crm_moderate' h.pk 'reject' %}" class="form" style="margin-top:var(--space-2)">
+            {% csrf_token %}
+            {{ reject_form.as_p }}
+            <button class="btn btn--danger btn--sm">Отклонить</button>
+        </form>
     </div>
 </article>
 
-<div class="modal-backdrop" id="reject-{{ h.pk }}" hidden>
-    <div class="modal">
-        <form method="post" action="{% url 'crm_moderate' h.pk 'reject' %}">
-            {% csrf_token %}
-            <div class="modal__head"><span class="modal__title">Отклонить «{{ h.title }}»</span><button type="button" class="modal__close" data-modal-close>×</button></div>
-            <div class="modal__body form">
-                {{ reject_form.as_p }}
-                <span class="field__hint">Причина уйдёт автору в уведомлении.</span>
-            </div>
-            <div class="modal__foot">
-                <button type="button" class="btn btn--ghost" data-modal-close>Отмена</button>
-                <button class="btn btn--danger">Отклонить</button>
-            </div>
-        </form>
-    </div>
-</div>
 {% empty %}
 <div class="empty-state">Очередь модерации пуста 🎉</div>
 {% endfor %}

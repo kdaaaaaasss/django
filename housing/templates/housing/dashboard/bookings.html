@@ -7,24 +7,19 @@
     <p class="dash__subtitle">Все поездки, которые вы бронировали.</p></div>
 </div>
 
-<div class="tabs" data-tabs data-tabs-scope="#bk-panels">
-    <button class="tab" data-tab="upcoming">Предстоящие ({{ grouped.upcoming|length }})</button>
-    <button class="tab" data-tab="pending">Ожидают ({{ grouped.pending|length }})</button>
-    <button class="tab" data-tab="past">Прошедшие ({{ grouped.past|length }})</button>
-    <button class="tab" data-tab="cancelled">Отменённые ({{ grouped.cancelled|length }})</button>
-</div>
+<div class="tabs"><span class="tab">Все бронирования</span></div>
 
 <div id="bk-panels" style="padding-top:var(--space-4)">
     <div data-tab-panel="upcoming">
         {% for b in grouped.upcoming %}{% include "housing/dashboard/_booking.html" %}{% empty %}<div class="empty-state">Нет предстоящих поездок.</div>{% endfor %}
     </div>
-    <div data-tab-panel="pending" hidden>
+    <div data-tab-panel="pending">
         {% for b in grouped.pending %}{% include "housing/dashboard/_booking.html" %}{% empty %}<div class="empty-state">Нет заявок в ожидании.</div>{% endfor %}
     </div>
-    <div data-tab-panel="past" hidden>
+    <div data-tab-panel="past">
         {% for b in grouped.past %}{% include "housing/dashboard/_booking.html" %}{% empty %}<div class="empty-state">Пока нет завершённых поездок.</div>{% endfor %}
     </div>
-    <div data-tab-panel="cancelled" hidden>
+    <div data-tab-panel="cancelled">
         {% for b in grouped.cancelled %}{% include "housing/dashboard/_booking.html" %}{% empty %}<div class="empty-state">Отменённых броней нет.</div>{% endfor %}
     </div>
 </div>

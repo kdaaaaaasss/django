@@ -33,17 +33,14 @@
 </div>
 {% endfor %}
 
-<div class="tabs" data-tabs data-tabs-scope="#rv-panels">
-    <button class="tab" data-tab="written">Мои отзывы ({{ written|length }})</button>
-    <button class="tab" data-tab="received">Полученные ({{ received|length }})</button>
-</div>
+<div class="tabs"><span class="tab">Все отзывы</span></div>
 
 <div id="rv-panels" style="padding-top:var(--space-4)">
     <div data-tab-panel="written">
         {% for r in written %}{% include "housing/_review.html" %}{% empty %}
         <div class="empty-state">Вы ещё не оставляли отзывов.</div>{% endfor %}
     </div>
-    <div data-tab-panel="received" hidden>
+    <div data-tab-panel="received">
         {% for r in received %}
             {% include "housing/_review.html" %}
             {% if not r.reply %}

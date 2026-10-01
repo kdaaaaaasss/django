@@ -7,7 +7,7 @@
 {% block content %}
 <div class="searchbar">
     <div class="container">
-        <form class="sbar" action="" method="get" data-strip-empty>
+        <form class="sbar" action="" method="get">
             <label class="sbar__cell">
                 <span class="sbar__label">Тип сделки</span>
                 <select class="sbar__input" name="deal_type">
@@ -52,10 +52,10 @@
         </form>
 
         <div class="sbar__extra">
-            <button class="btn btn--ghost btn--sm" data-modal-open="more-filters">
+            <a class="btn btn--ghost btn--sm" href="#more-filters">
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
                 Фильтры
-            </button>
+            </a>
             {% for f in active_filters %}
                 <a class="fchip" href="{{ f.url }}">{{ f.label }}<span class="fchip__x">×</span></a>
             {% endfor %}
@@ -75,15 +75,14 @@
             </div>
 
             <div class="chead__tools">
-                <div class="dropdown" data-dropdown>
-                    <button class="btn btn--ghost btn--sm" data-dropdown-toggle>{{ sort_label }} ▾</button>
+                <details class="dropdown">
+                    <summary class="btn btn--ghost btn--sm">{{ sort_label }} ▾</summary>
                     <div class="dropdown__menu">
                         {% for value, label in sort_options %}
                         <a class="dropdown__item" href="?{{ querystring }}&sort={{ value }}">{{ label }}</a>
                         {% endfor %}
                     </div>
-                </div>
-                <button class="btn btn--ghost btn--sm" id="map-toggle">Показать карту</button>
+                </details>
             </div>
         </div>
 
@@ -129,10 +128,11 @@
     </div>
 </main>
 
-<div class="modal-backdrop" id="more-filters" hidden>
-    <div class="modal">
-        <div class="modal__head"><span class="modal__title">Фильтры</span><button class="modal__close" data-modal-close>×</button></div>
-        <form method="get" action="{% url 'catalog' %}" data-strip-empty>
+<section class="page" id="more-filters">
+    <div class="container">
+    <div class="panel">
+        <div class="modal__head"><span class="modal__title">Фильтры</span></div>
+        <form method="get" action="{% url 'catalog' %}">
             <div class="modal__body stack-5">
                 <div class="field">
                     <span class="field__label">Тип жилья</span>
@@ -165,27 +165,6 @@
             </div>
         </form>
     </div>
-</div>
-{% endblock %}
-
-{% block js %}
-<script>
-    // Убираем пустые параметры из URL при отправке формы
-    document.querySelectorAll('form[data-strip-empty]').forEach(function (f) {
-        f.addEventListener('submit', function () {
-            f.querySelectorAll('input, select').forEach(function (el) {
-                if (!el.value) el.disabled = true;
-            });
-        });
-    });
-    // Показать/скрыть карту
-    var mt = document.getElementById('map-toggle');
-    if (mt) mt.addEventListener('click', function () {
-        var map = document.getElementById('cmap');
-        var on = map.hidden;
-        map.hidden = !on;
-        document.getElementById('clayout').classList.toggle('clayout--map', on);
-        mt.textContent = on ? 'Скрыть карту' : 'Показать карту';
-    });
-</script>
+    </div>
+</section>
 {% endblock %}
